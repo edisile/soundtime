@@ -1,0 +1,48 @@
+<div class="container is-fluid">
+    <div class="columns is-desktop is-centered is-vcentered is-multiline">
+        <div class="column is-one-third-desktop">
+            <p class="image">
+                <img src="https://i1.sndcdn.com/artworks-000550462386-cd3ty0-original.jpg">
+            </p>
+        </div>
+        
+        <div class="column is-three-fifths-desktop">
+            <div class="title">Title</div>
+            
+            <div class="subtitle">Artist - Album</div>
+
+            <span class="is-pulled-left">Seek: {{seek}}</span>
+
+            <span class="is-pulled-right">Duration: {{duration}}</span>
+
+            <progress class="progress is-small is-primary" value=".15" max="1"></progress>
+
+            <div class="has-text-centered">
+                <button class="button is-primary is-large is-rounded" ng-show="!playing" ng-click="$ctrl.playTrack()">
+                    <span class="icon is-large">
+                        <i class="mdi mdi-48px mdi-play"></i>
+                    </span>
+                </button>
+
+                <button class="button is-primary is-large is-rounded" ng-show="playing" ng-click="$ctrl.pauseTrack()">
+                    <span class="icon is-large">
+                        <i class="mdi mdi-48px mdi-pause"></i>
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="has-text-centered" ng-style="primaryFg">
+        <button class="button is-primary">
+            <span class="icon">
+                <i class="mdi mdi-24px mdi-download"></i>
+            </span>
+            <span>
+                Download
+            </span>
+        </button>
+    </div>
+
+    This is track n. {{id}}
+</div>

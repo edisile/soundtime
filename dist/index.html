@@ -1,0 +1,38 @@
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Soundtime</title>
+    <link rel="shortcut icon" href="favicon.png"><script type="text/javascript" src="index.js"></script></head>
+
+    <body class="has-navbar-fixed-top">
+        <div ng-app="soundtime" ng-cloak>
+            <navbar></navbar>
+
+            <div>
+                <div class="hero is-primary is-medium is-bold">
+                    <div class="hero-body container is-fluid">
+                        <h1 class="title">Soundtime</h1>
+                        <h2 class="subtitle">A simple music sharing service</h2>
+
+                        <div class="buttons">
+                            <a class="button is-primary">Primary</a>
+
+                            <a class="button is-link">Link</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div ng-view></div>
+        </div>
+	</body>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="../node_modules/bulma-modal-fx/dist/css/modal-fx.min.css"/>
+    <script type="text/javascript" src="../node_modules/bulma-modal-fx/dist/js/modal-fx.min.js"></script>
+    <!--
+    <link rel="stylesheet" href="https://unpkg.com/bulma-modal-fx/dist/css/modal-fx.min.css">
+    <script type="text/javascript" src="https://unpkg.com/bulma-modal-fx/dist/js/modal-fx.min.js"/>
+    -->
+</html>
+

@@ -1,0 +1,47 @@
+<nav class="navbar is-transparent is-fixed-top has-shadow is-unselectable">
+	<div class="container">
+		<div class="navbar-brand">
+			<a class="navbar-item logo" href="/#!/">
+				<img src="./assets/img/logo.svg" alt="soundti.me">
+			</a>
+			<a class="navbar-item is-hoverable" href="/#!/">
+				<span>Soundtime</span>
+			</a>
+		</div>
+
+		<div id="navbarExampleTransparentExample" class="navbar-menu">
+			<div class="navbar-end">
+				<div class="navbar-item">
+					<div class="field is-grouped">
+						<p class="control">
+							<a class="button is-primary" ng-click="$ctrl.changeModalStatus()">
+								<span class="icon">
+									<i class="mdi mdi-24px mdi-upload"></i>
+								</span>
+							</a>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</nav>
+
+<div class="modal modal-fx-normal" ng-class="{'is-active': uploadModalIsOpen}">
+	<div class="modal-background" ng-click="$ctrl.changeModalStatus()"></div>
+	
+	<div class="modal-card">
+		<header class="modal-card-head">
+			<p class="modal-card-title">Upload file</p>
+		</header>
+		
+		<section class="modal-card-body">
+		  <uploader></uploader>
+		</section>
+		
+		<footer class="modal-card-foot">
+			<button class="button is-success">Upload</button>
+			<button class="button" ng-click="$ctrl.changeModalStatus()">Cancel</button>
+		</footer>
+	</div>
+</div>
