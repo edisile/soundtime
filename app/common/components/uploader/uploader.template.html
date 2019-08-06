@@ -1,3 +1,53 @@
 <section class="uploader hero">
-	<ng-dropzone class="dropzone" options="dzOptions"></ng-dropzone>
+	<!-- <ng-dropzone class="dropzone" options="dzOptions"></ng-dropzone> -->
+
+	<div class="hero dnd-dropzone" msl-file-input="fileSelectionHandler" msl-dnd-folder-input="fileSelectionHandler">
+		<input type="file" multiple="" style="display: none;">
+
+		<div class="hero-body has-text-centered">
+			<div class="icon is-large">
+				<i class="mdi mdi-48px mdi-upload"></i>
+			</div>
+
+			<div>Drag files here or click to select files</div>
+		</div>
+	</div>
+
+	<table class="table is-fullwidth" ng-show="files.length > 0">
+		<thead>
+			<tr>
+				<th>Filename</th>
+				<th>Type</th>
+				<th>Size (B)</th>
+				<th></th>
+				<th></th>
+			</tr>
+		</thead>
+
+		<tbody ng-repeat="file in files">
+			<tr ng-class="{'has-text-danger': !file.type.includes('audio')}">
+				<td>{{file.name}}</td>
+
+				<td>{{file.type}}</td>
+
+				<td>{{file.size}}</td>
+
+				<td>
+					<a class="button" ng-click="">
+						<span class="icon">
+							<i class="mdi mdi-24px mdi-upload"></i>
+						</span>
+					</a>
+				</td>
+				
+				<td>
+					<a class="button" ng-click="">
+						<span class="icon">
+							<i class="mdi mdi-24px mdi-close"></i>
+						</span>
+					</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
 </section>

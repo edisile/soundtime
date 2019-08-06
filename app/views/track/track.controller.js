@@ -1,10 +1,10 @@
 /* @ngInject */
 class TrackController {
-    constructor($scope, $routeParams, playerService) {
+    constructor($scope, $routeParams/*, playerService*/) {
         this.$scope = $scope;
         this.$scope.id = $routeParams.trackId;
 
-        this.playerService = playerService;
+        //this.playerService = playerService;
         this.$scope.playing = false;
 
         // TODO: create a rest API to get a track

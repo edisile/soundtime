@@ -1,6 +1,6 @@
 @import "~bulma/bulma";
 
-.dropzone {
+.dnd-dropzone {
     border: dashed;
     border-width: 1px;
     border-radius: 0.5rem;
@@ -8,16 +8,8 @@
     &:hover {
         color: $link;
     }
+}
 
-    .dz-preview {
-        color: $grey-dark;
-        font-size: 10px;
-        display: inline-block;
-        padding: 10px;
-        max-width: 25%;
-    }
-
-    .dz-message {
-        padding: 8rem 35% 8rem 35%;
-    }
+.msl-drag-over {
+    color: $primary;
 }
