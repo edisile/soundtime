@@ -1,8 +1,10 @@
 /* @ngInject */
 class TrackController {
-    constructor($scope, $routeParams/*, playerService*/) {
+    constructor($scope, $routeParams, colorService/*, playerService*/) {
         this.$scope = $scope;
         this.$scope.id = $routeParams.trackId;
+
+        this.colorService = colorService;
 
         //this.playerService = playerService;
         this.$scope.playing = false;
@@ -14,13 +16,15 @@ class TrackController {
     }
 
     playTrack() {
-        this.playerService.play();
         this.$scope.playing = !this.$scope.playing;
+        console.log(this.$scope.playing);
+        this.playerService.play();
     }
 
     pauseTrack() {
-        this.playerService.pause();
         this.$scope.playing = !this.$scope.playing;
+        console.log(this.$scope.playing);
+        this.playerService.pause();
     }
 }
 

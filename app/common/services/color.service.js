@@ -3,21 +3,29 @@ class ColorService {
 	constructor($rootScope) {
 		this.$rootScope = $rootScope;
 		
-		this.$rootScope.primaryBg = {
-			"background-color" : "#00d1b2"
+		this.colors = {
+			primary: "#00d1b2",
+			accent: "#3273dc",
+			accentStrong: "#3273dc"
 		};
 
-		this.$rootScope.primaryFg = {
-			"color" : "#00d1b2"
-		};
+		this.$rootScope.colors = this.colors;
+	}
 
-		this.$rootScope.accentBg = {
-			"background-color" : "#3273dc"
-		};
+	changePrimary(newPrimary) {
+		this.colors.primary = newPrimary;
+	}
 
-		this.$rootScope.accentFg = {
-			"color" : "#3273dc"
-		};
+	changeAccent(newAccent) {
+		this.colors.accent = newAccent;
+	}
+
+	changeAccentStrong(newAccentStrong) {
+		this.colors.accentStrong = newAccentStrong;
+	}
+
+	update() {
+		this.$rootScope.$apply();
 	}
 }
 

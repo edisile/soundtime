@@ -1,5 +1,5 @@
-<nav class="navbar is-transparent is-fixed-top has-shadow is-unselectable">
-	<div class="container">
+<nav class="navbar is-fixed-top has-shadow is-unselectable">
+	<div class="container is-fluid">
 		<div class="navbar-brand">
 			<a class="navbar-item logo" href="/#!/">
 				<img src="./assets/img/logo.svg" alt="soundti.me">
@@ -9,7 +9,7 @@
 			</a>
 		</div>
 
-		<div id="navbarExampleTransparentExample" class="navbar-menu">
+		<div class="navbar-menu">
 			<div class="navbar-end">
 				<div class="navbar-item">
 					<div class="field is-grouped">
@@ -27,7 +27,8 @@
 	</div>
 </nav>
 
-<div class="modal modal-fx-normal" ng-class="{'is-active': uploadModalIsOpen}">
+<!-- TODO: move this somewhere else -->
+<div class="modal modal-fx-normal is-unselectable" ng-class="{'is-active': uploadModalIsOpen}">
 	<div class="modal-background" ng-click="$ctrl.changeModalStatus()"></div>
 	
 	<div class="modal-card">

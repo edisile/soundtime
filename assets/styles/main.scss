@@ -3,18 +3,15 @@
 
 //$primary: #00d1b2; // This is the same as the default
 
-/* Custom scrollbar */
-/* width */
+// Custom scrollbar
 ::-webkit-scrollbar {
     width: 10px;
 }
 
-/* Handle */
 ::-webkit-scrollbar-thumb {
     background: $grey-light;
 }
 
-/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-    background: $grey-dark;
+    background: #8f8f8f;
 }
