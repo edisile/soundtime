@@ -1,28 +1,36 @@
+import * as id3 from 'id3js';
+
 /* @ngInject */
 class UploaderController {
     constructor($scope) {
-        $scope.dzOptions = {
-            url : '/alt_upload_url',
-            paramName : 'audio',
-            maxFilesize : '100',
-            acceptedFiles : 'audio/*',
-            addRemoveLinks : false,
-            autoProcessQueue: false
-        }
+        this.$scope = $scope;
 
-        $scope.files = [];
-        $scope.uploads = [];
+        this.$scope.files = [];
+        this.$scope.uploads = [];
 
-        $scope.fileSelectionHandler = (files) => {
+        console.log(this.$scope.files);
+        console.log(this.$scope.uploads);
+
+        this.$scope.fileSelectionHandler = (files) => {
             for (var i = 0; i < files.length; i++) {
-                console.log(files[i]);
-                $scope.files.push(files[i]);
-                $scope.uploads.push({
+                files[i].isUploading = false;
+                this.$scope.files.push(files[i]);
+                this.$scope.uploads.push({
                     id: new Date().getTime() + files[i].name, // fake id
                     file_name: files[i].name
                 });
             }
         };
+    }
+
+    removeFile(index) {
+        this.$scope.files.splice(index, 1);
+        this.$scope.uploads.splice(index, 1);
+    }
+
+    uploadFile(index) {
+        // TODO: implement upload for real
+        this.$scope.files[index].isUploading = !this.$scope.files[index].isUploading;
     }
 }
 

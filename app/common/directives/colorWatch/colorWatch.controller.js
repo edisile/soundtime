@@ -10,7 +10,7 @@ class ColorWatchController {
 
 		this.element.addEventListener('load',
 			() => {
-				// For some reason high quality == bigger downsampling, wtf
+				// For some reason higher quality == bigger downsampling, wtf
 				let v = new V(this.element, {colorCount: 16, quality: 500});
 
 				v.getPalette().then(

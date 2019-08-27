@@ -13,3 +13,28 @@
 .msl-drag-over {
     color: $primary;
 }
+
+// Loading spinner
+
+.spinner {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.spinner:after {
+	animation: changeContent .8s linear infinite;
+	content: "⠋";
+}
+
+@keyframes changeContent {
+	10% { content: "⠙"; }
+	20% { content: "⠹"; }
+	30% { content: "⠸"; }
+	40% { content: "⠼"; }
+	50% { content: "⠴"; }
+	60% { content: "⠦"; }
+	70% { content: "⠧"; }
+	80% { content: "⠇"; }
+	90% { content: "⠏"; }
+}

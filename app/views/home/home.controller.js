@@ -1,10 +1,7 @@
 /* @ngInject */
 class HomeController {
-	constructor($scope, colorService) {
+	constructor($scope) {
 		this.$scope = $scope;
-		this.$scope.colorService = colorService;
-
-		console.log(colorService.colors);
 	}
 }
 

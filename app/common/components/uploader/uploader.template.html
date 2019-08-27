@@ -1,6 +1,4 @@
 <section class="uploader hero">
-	<!-- <ng-dropzone class="dropzone" options="dzOptions"></ng-dropzone> -->
-
 	<div class="hero dnd-dropzone" msl-file-input="fileSelectionHandler" msl-dnd-folder-input="fileSelectionHandler">
 		<input type="file" multiple="" style="display: none;">
 
@@ -33,15 +31,17 @@
 				<td>{{file.size}}</td>
 
 				<td>
-					<a class="button" ng-click="">
-						<span class="icon">
+					<a class="button" ng-if="file.type.includes('audio')" ng-click="$ctrl.uploadFile($index)">
+						<span class="icon" ng-hide="file.isUploading">
 							<i class="mdi mdi-24px mdi-upload"></i>
 						</span>
+
+						<div class="spinner" ng-if="file.isUploading"></div>
 					</a>
 				</td>
 				
 				<td>
-					<a class="button" ng-click="">
+					<a class="button" ng-click="$ctrl.removeFile($index)">
 						<span class="icon">
 							<i class="mdi mdi-24px mdi-close"></i>
 						</span>

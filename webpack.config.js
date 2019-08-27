@@ -65,6 +65,7 @@ module.exports = (env) => {
 	                favicon: "assets/favicon.png"
 	            }
             )
-        ]
+        ],
+        node: { fs: 'empty' }
     }
 };

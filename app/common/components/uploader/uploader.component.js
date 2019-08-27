@@ -1,8 +1,8 @@
-import UploaderTemplate from './uploader.template.html';
-import UploaderController from './uploader.controller';
-import UploaderStyles from './uploader.styles.scss';
+import uploaderTemplate from './uploader.template.html';
+import uploaderController from './uploader.controller';
+import uploaderStyles from './uploader.styles.scss';
 
 export default {
-    template: UploaderTemplate,
-    controller: UploaderController
-}
+    template: uploaderTemplate,
+    controller: uploaderController
+};
