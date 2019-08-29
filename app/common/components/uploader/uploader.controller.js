@@ -1,9 +1,10 @@
-import * as id3 from 'id3js';
+//import * as id3 from 'id3js';
 
 /* @ngInject */
 class UploaderController {
-    constructor($scope) {
+    constructor($scope, uploadService) {
         this.$scope = $scope;
+        this.uploadService = uploadService;
 
         this.$scope.files = [];
         this.$scope.uploads = [];
@@ -11,16 +12,17 @@ class UploaderController {
         console.log(this.$scope.files);
         console.log(this.$scope.uploads);
 
-        this.$scope.fileSelectionHandler = (files) => {
-            for (var i = 0; i < files.length; i++) {
-                files[i].isUploading = false;
-                this.$scope.files.push(files[i]);
-                this.$scope.uploads.push({
-                    id: new Date().getTime() + files[i].name, // fake id
-                    file_name: files[i].name
-                });
-            }
-        };
+        this.$scope.fileSelectionHandler = 
+            (files) => {
+                for (var i = 0; i < files.length; i++) {
+                    files[i].isUploading = false;
+                    this.$scope.files.push(files[i]);
+                    this.$scope.uploads.push({
+                        id: new Date().getTime() + files[i].name, // fake id
+                        file_name: files[i].name
+                    });
+                }
+            };
     }
 
     removeFile(index) {
@@ -31,6 +33,7 @@ class UploaderController {
     uploadFile(index) {
         // TODO: implement upload for real
         this.$scope.files[index].isUploading = !this.$scope.files[index].isUploading;
+        this.uploadService.uploadFile(this.$scope.files[index]);
     }
 }
 

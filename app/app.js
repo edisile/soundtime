@@ -10,6 +10,7 @@ import scrollWatch from '../node_modules/angular-scroll-watch/build/angular-scro
 
 // Modules
 import commonModule from './common/common.module';
+import configModule from './config/config.module';
 import trackModule from './views/track/track.module';
 import homeModule from './views/home/home.module';
 
@@ -21,6 +22,7 @@ import mainStyle from '../assets/styles/main.scss';
 
 const required = [
 	'app.common',
+	'app.config',
 	'app.home',
 	'app.track',
 	'msl.uploads',

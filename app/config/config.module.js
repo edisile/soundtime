@@ -1,5 +1,8 @@
 import angular from 'angular';
+import apiConstant from './api.constant';
 
-let ConfigModule = angular.module('app.config', []);
+let configModule = angular.module('app.config', []);
 
-export default ConfigModule;
+configModule.constant('api', apiConstant);
+
+export default configModule;
