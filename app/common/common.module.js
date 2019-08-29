@@ -3,9 +3,9 @@ import angular from 'angular';
 import navbarComponent from './components/navbar/navbar.component';
 import uploaderComponent from './components/uploader/uploader.component';
 // Directives
-import colorWatchDirective from './directives/colorWatch/colorWatch.directive';
+//import colorWatchDirective from './directives/colorWatch/colorWatch.directive';
 // Services
-import colorService from './services/color.service';
+//import colorService from './services/color.service';
 import playerService from './services/player.service';
 import uploadService from './services/upload.service';
 
@@ -14,10 +14,10 @@ let commonModule = angular.module('app.common', ['app.config', 'msl.uploads']);
 commonModule.component('navbar', navbarComponent);
 commonModule.component('uploader', uploaderComponent);
 
-commonModule.directive('colorWatch', colorWatchDirective);
+//commonModule.directive('colorWatch', colorWatchDirective);
 
-commonModule.service('colorService', colorService);
-commonModule.service('playerService', playerService);
+//commonModule.service('colorService', colorService);
+//commonModule.service('playerService', playerService);
 commonModule.service('uploadService', uploadService);
 
 export default commonModule;

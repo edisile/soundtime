@@ -17,10 +17,27 @@ class UploadService {
 			// On success
 			(response) => {
 				console.log(response.data);
+				this.$http.put(response.data.url, file).then(
+					// On success
+					(uploadResponse) => {
+						console.log(uploadResponse);
+						file.isUploading = false;
+						file.isUploaded = true;
+					},
+					// On error
+					(uploadError) => {
+						console.error(uploadError);
+						file.isUploading = false;
+						file.isUploaded = false;
+					}
+				);
 			},
 			// On error
 			(error) => {
 				console.error(error);
+				file.isUploaded = false;
+				file.isUploading = false;
+				
 			}
 		);
 	}

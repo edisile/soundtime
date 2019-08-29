@@ -35,9 +35,14 @@
 				<td>{{file.size}}</td>
 
 				<td>
-					<a class="button" ng-if="file.type.includes('audio')" ng-click="$ctrl.uploadFile($index)">
-						<span class="icon" ng-hide="file.isUploading">
+					<a class="button" ng-if="file.type.includes('audio')" 
+							ng-click="!file.isUploading && !file.isUploaded ? $ctrl.uploadFile($index) : undefined">
+						<span class="icon" ng-if="!file.isUploading && !file.isUploaded">
 							<i class="mdi mdi-24px mdi-upload"></i>
+						</span>
+
+						<span class="icon" ng-class="{'has-text-success	': file.isUploaded}" ng-if="file.isUploaded">
+							<i class="mdi mdi-24px mdi-check"></i>
 						</span>
 
 						<div class="spinner" ng-if="file.isUploading"></div>
@@ -45,7 +50,7 @@
 				</td>
 				
 				<td>
-					<a class="button" ng-click="$ctrl.removeFile($index)">
+					<a class="button" ng-click="$ctrl.removeFile($index)" ng-if="!file.isUploading && !file.isUploaded">
 						<span class="icon">
 							<i class="mdi mdi-24px mdi-close"></i>
 						</span>

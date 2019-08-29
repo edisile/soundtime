@@ -1,6 +1,7 @@
 /* @ngInject */
 class ColorService {
 	constructor($rootScope) {
+		console.log("colorService");
 		this.$rootScope = $rootScope;
 		
 		this.colors = {

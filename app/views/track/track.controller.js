@@ -1,10 +1,10 @@
 /* @ngInject */
 class TrackController {
-    constructor($scope, $routeParams, colorService/*, playerService*/) {
+    constructor($scope, $routeParams, /*colorService, playerService*/) {
         this.$scope = $scope;
         this.$scope.id = $routeParams.trackId;
 
-        this.colorService = colorService;
+        //this.colorService = colorService;
 
         //this.playerService = playerService;
         this.$scope.playing = false;

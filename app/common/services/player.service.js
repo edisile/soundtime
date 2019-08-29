@@ -3,6 +3,7 @@ import {Howl, Howler} from 'howler';
 /* @ngInject */
 class PlayerService {
 	constructor() {
+		console.log("colorService");
 		this.sound = new Howl({
 			src: [""]
 		});
