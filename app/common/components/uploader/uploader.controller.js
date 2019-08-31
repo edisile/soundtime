@@ -25,9 +25,25 @@ class UploaderController {
     }
 
     uploadFile(index) {
-        // TODO: implement upload for real
+        // TODO: clean this up
         this.$scope.files[index].isUploading = !this.$scope.files[index].isUploading;
         this.uploadService.uploadFile(this.$scope.files[index]);
+    }
+
+    getLink(index) {
+        // THIS ONLY WORKS OVER HTTPS
+        // TODO:                make this stuff here VVV a real link
+        navigator.clipboard.writeText(this.$scope.files[index].fileId).then(
+            // On success
+            (x) => {
+                console.log("Copied to clipboard");
+            },
+            // On error
+            (x) => {
+                // TODO: add fallback maybe? Not really a priority
+                console.error("Couldn't copy to clipboard");
+            }
+        );
     }
 }
 

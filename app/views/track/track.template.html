@@ -3,16 +3,16 @@
         <div class="column is-one-third-desktop">
             <p class="image">
                 <img color-watch src="./assets/img/enemy.png">
-                    <div class="square" style="background-color: #8e5741;">
+                    <!-- <div class="square" style="background-color: #8e5741;">
                         <div class="line" style="background-color: #d4b4a4;"></div>
                         <div class="line" style="background-color: #e3cec4;"></div>
                         <div class="line" style="background-color: #d3b2a2;"></div>
-                    </div>
+                    </div> -->
                 </img>
             </p>
         </div>
         
-        <div class="column is-three-fifths-desktop">
+        <!-- <div class="column is-three-fifths-desktop">
             <div class="title">Title</div>
             
             <div class="subtitle">Artist - Album</div>
@@ -36,8 +36,37 @@
                     </span>
                 </button>
             </div>
+        </div> -->
+    </div>
+
+    <div class="content is-small has-text-centered">
+        <audio controls>
+            <source src="https://upload.wikimedia.org/wikipedia/it/c/c2/Codice_Giustiniano.ogg" type="audio/ogg">
+                <!-- TODO: FETCH THE AUDIO LINK AND PUT IT UP HERE ^^^ -->
+        </audio>
+
+        <h2>File details</h2>
+
+        <div ng-hide="trackInfoService.pendingRequest || trackInfoService.error != undefined">
+            <div>
+                <b>Name:</b> {{trackInfoService.trackDetails.filename}}
+            </div>
+            
+            <div>
+                <b>Size:</b> {{trackInfoService.trackDetails.size}} B
+            </div>
+            
+            <div>
+                <b>Type:</b> {{trackInfoService.trackDetails.fileType}}
+            </div>
+            
+            <div>
+                <b>Upload date:</b> {{trackInfoService.trackDetails.uploadDate}}
+            </div>
         </div>
     </div>
+
+    <br>
 
     <div class="has-text-centered" ng-style="primaryFg">
         <button class="button is-primary">
@@ -49,6 +78,4 @@
             </span>
         </button>
     </div>
-
-    This is track n. {{id}}
 </div>

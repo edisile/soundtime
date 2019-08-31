@@ -8,6 +8,7 @@ import uploaderComponent from './components/uploader/uploader.component';
 //import colorService from './services/color.service';
 import playerService from './services/player.service';
 import uploadService from './services/upload.service';
+import apiUrlBuilderService from './services/apiUrlBuilder.service';
 
 let commonModule = angular.module('app.common', ['app.config', 'msl.uploads']);
 
@@ -19,5 +20,6 @@ commonModule.component('uploader', uploaderComponent);
 //commonModule.service('colorService', colorService);
 //commonModule.service('playerService', playerService);
 commonModule.service('uploadService', uploadService);
+commonModule.service('apiUrlBuilderService', apiUrlBuilderService);
 
 export default commonModule;

@@ -36,7 +36,7 @@
 
 				<td>
 					<a class="button" ng-if="file.type.includes('audio')" 
-							ng-click="!file.isUploading && !file.isUploaded ? $ctrl.uploadFile($index) : undefined">
+							ng-click="!(file.isUploading || file.isUploaded) ? $ctrl.uploadFile($index) : undefined">
 						<span class="icon" ng-if="!file.isUploading && !file.isUploaded">
 							<i class="mdi mdi-24px mdi-upload"></i>
 						</span>
@@ -53,6 +53,12 @@
 					<a class="button" ng-click="$ctrl.removeFile($index)" ng-if="!file.isUploading && !file.isUploaded">
 						<span class="icon">
 							<i class="mdi mdi-24px mdi-close"></i>
+						</span>
+					</a>
+
+					<a class="button" ng-click="$ctrl.getLink($index)" ng-if="file.isUploaded && file.fileId != undefined">
+						<span class="icon">
+							<i class="mdi mdi-24px mdi-content-copy"></i>
 						</span>
 					</a>
 				</td>
