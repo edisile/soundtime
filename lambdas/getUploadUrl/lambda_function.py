@@ -1,6 +1,7 @@
 import uuid
 import boto3
 from nanoid import generate
+from datetime import datetime
 
 """
     Generate a presigned URL for a PUT request to S3
@@ -35,6 +36,7 @@ def lambda_handler(event, context):
             "s3Key": {"S": s3ObjectKey},
             "filename": {"S": event["filename"]},
             "size": {"N": event["size"]},
+            "timestamp": {"S": datetime.isoformat(datetime.now())},
             "type": {"S": event["type"]}
         })
     
