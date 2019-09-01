@@ -1,16 +1,16 @@
 <div class="container is-fluid" ng-style="playing ? {'background-color': colors.accentStrong, transition: 'color 1500ms'} : {transition: 'color 1500ms'}">
     <div class="columns is-desktop is-centered is-vcentered is-multiline">
-        <div class="column is-one-third-desktop">
+        <!-- <div class="column is-one-third-desktop">
             <p class="image">
                 <img color-watch src="./assets/img/enemy.png">
-                    <!-- <div class="square" style="background-color: #8e5741;">
+                    <div class="square" style="background-color: #8e5741;">
                         <div class="line" style="background-color: #d4b4a4;"></div>
                         <div class="line" style="background-color: #e3cec4;"></div>
                         <div class="line" style="background-color: #d3b2a2;"></div>
-                    </div> -->
+                    </div>
                 </img>
             </p>
-        </div>
+        </div> -->
         
         <!-- <div class="column is-three-fifths-desktop">
             <div class="title">Title</div>
@@ -40,8 +40,7 @@
     </div>
 
     <div class="content is-small has-text-centered">
-        <audio controls>
-            <source src="https://upload.wikimedia.org/wikipedia/it/c/c2/Codice_Giustiniano.ogg" type="audio/ogg">
+        <audio controls src="https://upload.wikimedia.org/wikipedia/it/c/c2/Codice_Giustiniano.ogg">
                 <!-- TODO: FETCH THE AUDIO LINK AND PUT IT UP HERE ^^^ -->
         </audio>
 
@@ -68,14 +67,24 @@
 
     <br>
 
-    <div class="has-text-centered" ng-style="primaryFg">
-        <button class="button is-primary">
+    <div class="has-text-centered">
+        <button class="button is-primary" ng-click="$ctrl.downloadTrack()" 
+                ng-class="{'is-success': downloadStarted, 'is-danger': errorDuringRequest}">
+
             <span class="icon">
-                <i class="mdi mdi-24px mdi-download"></i>
+                <i class="mdi mdi-24px mdi-download" ng-if="!(waitingForDownload || downloadStarted)"></i>
+                
+                <i class="mdi mdi-24px mdi-check" ng-if="downloadStarted"></i>
+
+                <i class="mdi mdi-24px mdi-alert-circle" ng-if="errorDuringRequest"></i>
+
+                <div class="spinner" ng-if="waitingForDownload && !downloadStarted"></div>
             </span>
+
             <span>
                 Download
             </span>
+
         </button>
     </div>
 </div>

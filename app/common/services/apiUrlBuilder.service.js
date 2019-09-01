@@ -4,6 +4,10 @@ class ApiUrlBuilderService {
 		this.api = apiConstants;
 	}
 
+	buildGetDownloadUrlRequest(fileId) {
+		return this.api.getDownloadUrlEndpoint + `?id=${fileId}`;
+	}
+
 	buildGetUploadUrlRequest( {filename, size, type} ) {
 		// The upload URL request endpoint requires the following structure:
 		// < endpoint URL > + "?filename=< ... >&size=< ... >&type=< ... >"

@@ -32,8 +32,6 @@ class TrackInfoService {
 		promise.then(
 				// On success
 				(response) => {
-					console.log(response)
-					console.log("ok")
 					for (let k in response.data) {
 						if (response.data.hasOwnProperty(k)) 
 							this.trackDetails[k] = response.data[k];
@@ -43,12 +41,17 @@ class TrackInfoService {
 				},
 				// On error
 				(response) => {
-					console.error("not ok")
 					this.pendingRequest = false;
 					this.error = "Something went wrong during the request " + 
 							"for this track...";
 				}
 		);
+	}
+
+	getDownloadLink(id) {
+		let requestUrl = this.apiService.buildGetDownloadUrlRequest(id);
+
+		return this.$http.get(requestUrl);
 	}
 }
 

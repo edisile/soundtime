@@ -1,7 +1,9 @@
 /* @ngInject */
 class TrackController {
-    constructor($scope, $routeParams, trackInfoService, /*colorService, playerService*/) {
+    constructor($http, $scope, $routeParams, trackInfoService, /*colorService, playerService*/) {
+        this.$http = $http;
         this.$scope = $scope;
+        this.id = $routeParams.trackId;
         this.$scope.id = $routeParams.trackId;
         this.trackInfoService = trackInfoService;
 
@@ -13,10 +15,35 @@ class TrackController {
         //this.playerService = playerService;
 
         this.$scope.playing = false;
-        // TODO: create a rest API to get a track
-        // TODO: create a service to request a track
-        // TODO: request a track
-        // TODO: implement a player
+        
+        this.$scope.waitingForDownload = false;
+        this.$scope.downloadStarted = false;
+        this.$scope.errorDuringRequest = false;
+    }
+
+    downloadTrack() {
+        console.log("Requesting link")
+        this.$scope.waitingForDownload = true;
+        this.$scope.downloadStarted = false;
+        this.$scope.errorDuringRequest = false;
+        let promise = this.trackInfoService.getDownloadLink(this.id);
+
+        promise.then(
+                // On success
+                (response) => {
+                    // Download
+                    window.open(response.data.url,"","");
+                    // ^ Horrendous workaround, ugly to see
+                    this.$scope.waitingForDownload = false;
+                    this.$scope.downloadStarted = true;
+                },
+                // On error
+                (error) => {
+                    console.error(error);
+                    this.$scope.waitingForDownload = false;
+                    this.$scope.errorDuringRequest = true;
+                }
+        );
     }
 
     playTrack() {
