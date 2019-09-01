@@ -1,6 +1,6 @@
-<div class="container is-fluid" ng-style="playing ? {'background-color': colors.accentStrong, transition: 'color 1500ms'} : {transition: 'color 1500ms'}">
-    <div class="columns is-desktop is-centered is-vcentered is-multiline">
-        <!-- <div class="column is-one-third-desktop">
+<div class="hero container is-fluid" ng-style="playing ? {'background-color': colors.accentStrong, transition: 'color 1500ms'} : {transition: 'color 1500ms'}">
+    <!--<div class="columns is-desktop is-centered is-vcentered is-multiline">
+        <div class="column is-one-third-desktop">
             <p class="image">
                 <img color-watch src="./assets/img/enemy.png">
                     <div class="square" style="background-color: #8e5741;">
@@ -10,9 +10,9 @@
                     </div>
                 </img>
             </p>
-        </div> -->
+        </div>
         
-        <!-- <div class="column is-three-fifths-desktop">
+        <div class="column is-three-fifths-desktop">
             <div class="title">Title</div>
             
             <div class="subtitle">Artist - Album</div>
@@ -36,55 +36,57 @@
                     </span>
                 </button>
             </div>
-        </div> -->
-    </div>
+        </div>
+    </div> -->
 
-    <div class="content is-small has-text-centered">
-        <audio controls src="https://upload.wikimedia.org/wikipedia/it/c/c2/Codice_Giustiniano.ogg">
-                <!-- TODO: FETCH THE AUDIO LINK AND PUT IT UP HERE ^^^ -->
-        </audio>
+    <div class="hero-body has-text-centered">
+        <div class="content is-small">
+            <audio controls src="https://upload.wikimedia.org/wikipedia/it/c/c2/Codice_Giustiniano.ogg">
+                    <!-- TODO: FETCH THE AUDIO LINK AND PUT IT UP HERE ^^^ -->
+            </audio>
 
-        <h2>File details</h2>
+            <h2>File details</h2>
 
-        <div ng-hide="trackInfoService.pendingRequest || trackInfoService.error != undefined">
-            <div>
-                <b>Name:</b> {{trackInfoService.trackDetails.filename}}
-            </div>
-            
-            <div>
-                <b>Size:</b> {{trackInfoService.trackDetails.size}} B
-            </div>
-            
-            <div>
-                <b>Type:</b> {{trackInfoService.trackDetails.fileType}}
-            </div>
-            
-            <div>
-                <b>Upload date:</b> {{trackInfoService.trackDetails.uploadDate}}
+            <div ng-hide="trackInfoService.pendingRequest || trackInfoService.error != undefined">
+                <div>
+                    <b>Name:</b> {{trackInfoService.trackDetails.filename}}
+                </div>
+                
+                <div>
+                    <b>Size:</b> {{trackInfoService.trackDetails.size | fileSizeFilter}}
+                </div>
+                
+                <div>
+                    <b>Type:</b> {{trackInfoService.trackDetails.fileType}}
+                </div>
+                
+                <div>
+                    <b>Upload date:</b> {{trackInfoService.trackDetails.uploadDate}}
+                </div>
             </div>
         </div>
-    </div>
 
-    <br>
+        <br>
 
-    <div class="has-text-centered">
-        <button class="button is-primary" ng-click="$ctrl.downloadTrack()" 
-                ng-class="{'is-success': downloadStarted, 'is-danger': errorDuringRequest}">
+        <div class="has-text-centered">
+            <button class="button is-primary" ng-click="$ctrl.downloadTrack()" 
+                    ng-class="{'is-success': downloadStarted, 'is-danger': errorDuringRequest}">
 
-            <span class="icon">
-                <i class="mdi mdi-24px mdi-download" ng-if="!(waitingForDownload || downloadStarted)"></i>
-                
-                <i class="mdi mdi-24px mdi-check" ng-if="downloadStarted"></i>
+                <span class="icon">
+                    <i class="mdi mdi-24px mdi-download" ng-if="!(waitingForDownload || downloadStarted)"></i>
+                    
+                    <i class="mdi mdi-24px mdi-check" ng-if="downloadStarted"></i>
 
-                <i class="mdi mdi-24px mdi-alert-circle" ng-if="errorDuringRequest"></i>
+                    <i class="mdi mdi-24px mdi-alert-circle" ng-if="errorDuringRequest"></i>
 
-                <div class="spinner" ng-if="waitingForDownload && !downloadStarted"></div>
-            </span>
+                    <div class="spinner" ng-if="waitingForDownload && !downloadStarted"></div>
+                </span>
 
-            <span>
-                Download
-            </span>
+                <span>
+                    Download
+                </span>
 
-        </button>
+            </button>
+        </div>
     </div>
 </div>

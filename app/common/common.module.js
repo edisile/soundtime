@@ -4,6 +4,8 @@ import navbarComponent from './components/navbar/navbar.component';
 import uploaderComponent from './components/uploader/uploader.component';
 // Directives
 //import colorWatchDirective from './directives/colorWatch/colorWatch.directive';
+// Filters
+import fileSizeFilter from './filters/fileSize.filter';
 // Services
 //import colorService from './services/color.service';
 import playerService from './services/player.service';
@@ -16,6 +18,8 @@ commonModule.component('navbar', navbarComponent);
 commonModule.component('uploader', uploaderComponent);
 
 //commonModule.directive('colorWatch', colorWatchDirective);
+
+commonModule.filter('fileSizeFilter', fileSizeFilter);
 
 //commonModule.service('colorService', colorService);
 //commonModule.service('playerService', playerService);
