@@ -1,0 +1,102 @@
+.music-player {
+    display: block;
+    position: relative;
+    width: 400px;
+    height: 570px;
+    margin: auto;
+    border-radius: 10px 10px 10px 10px;
+    background: transparent linear-gradient(
+                                            to bottom,
+                                            #00000000 50%,
+                                            #f06564ff 70%) repeat scroll 0 0;
+    box-shadow: 0px 5px 10px 0px #00000088;
+}
+
+.cover {
+    float: left; /* ??? */
+    width: 400px;
+    height: 400px;
+}
+
+.cover img {
+    display: block;
+    position: absolute;
+    width: 100%;
+    margin: auto;
+    text-align: center;
+    z-index: -1;
+    border-radius: 10px 10px 0px 0px;
+}
+
+.track-info {
+    width: 100%;
+    padding: 0 5% 0 5%;
+}
+
+.track-info h1 {
+    margin: 0;
+    font-size: 33px;
+    color: #fff;
+    padding: 0 5%;
+}
+
+.track-info h3 {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 500;
+    color: #ccc;
+    padding: 0 5%;
+}
+
+.player-controls {
+    width: 100%;
+    display: block;
+    height: auto;
+    position: relative;
+}
+
+.play-button {
+    position: absolute;
+    right: 30px;
+    bottom: 72px;
+    height: 48px;
+    width: 48px;
+    border-radius: 24px;
+    background-color: red;
+    box-shadow: 0px 2px 4px 0px #00000055;
+    transition:.25s;
+}
+
+.play-button:hover {
+    bottom: 74px;
+    box-shadow: 0px 4px 8px 0px #00000044;
+    transition:.25s;
+}
+
+#seek-bar {
+    background-color: #ffffff55;
+/*    margin-left: 9%;
+    margin-right: 9%;*/
+    margin-top: 20px;
+    margin-bottom: 20px;
+    height: 20px;
+
+    border-radius: 0px 0px 10px 10px;
+    overflow: hidden;
+}
+
+#seek-value {
+    background-color: cyan;
+    display: block;
+    height: inherit;
+    width: inherit;
+    transition:.25s;
+}
+
+#seek-value:hover {
+    opacity: 0.6;
+    transition:.25s;
+}
+
+audio {
+}

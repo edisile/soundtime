@@ -5,4 +5,4 @@ import navbarStyle from './navbar.style.scss';
 export default {
 	template: navbarTemplate,
 	controller: navbarController
-}
+};

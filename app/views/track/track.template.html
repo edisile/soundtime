@@ -39,13 +39,13 @@
         </div>
     </div> -->
 
+    <player class="hero-body"></player>
+
     <div class="hero-body has-text-centered">
         <div class="content is-small">
-            <audio controls src="https://upload.wikimedia.org/wikipedia/it/c/c2/Codice_Giustiniano.ogg">
-                    <!-- TODO: FETCH THE AUDIO LINK AND PUT IT UP HERE ^^^ -->
-            </audio>
+            <h2 ng-hide="trackInfoService.error">File details</h2>
 
-            <h2>File details</h2>
+            <div class="spinner" ng-show="trackInfoService.pendingRequest && trackInfoService.error == undefined"></div>
 
             <div ng-hide="trackInfoService.pendingRequest || trackInfoService.error != undefined">
                 <div>
@@ -64,11 +64,15 @@
                     <b>Upload date:</b> {{trackInfoService.trackDetails.uploadDate}}
                 </div>
             </div>
+
+            <div class="is-size-3 has-text-danger" ng-show="trackInfoService.error">
+                <b>Error, this file does not exist</b>
+            </div>
         </div>
 
         <br>
 
-        <div class="has-text-centered">
+        <div class="has-text-centered" ng-hide="trackInfoService.error">
             <button class="button is-primary" ng-click="$ctrl.downloadTrack()" 
                     ng-class="{'is-success': downloadStarted, 'is-danger': errorDuringRequest}">
 

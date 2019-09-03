@@ -10,6 +10,7 @@ class TrackInfoService {
 		this.trackDetails = {
 			filename: undefined,
 			fileType: undefined,
+			preview: undefined,
 			size: undefined,
 			uploadDate: undefined
 		};
@@ -32,15 +33,17 @@ class TrackInfoService {
 		promise.then(
 				// On success
 				(response) => {
+					console.log(this)
 					for (let k in response.data) {
 						if (response.data.hasOwnProperty(k)) 
 							this.trackDetails[k] = response.data[k];
 					}
-
+					this.error = undefined;
 					this.pendingRequest = false;
 				},
 				// On error
 				(response) => {
+					console.error(response)
 					this.pendingRequest = false;
 					this.error = "Something went wrong during the request " + 
 							"for this track...";

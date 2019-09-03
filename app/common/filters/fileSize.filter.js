@@ -14,9 +14,8 @@ export default () => {
 		let i = 0;
 		for (i; input > 1023; i++) {
 			input /= 1024;
-			console.log(input);
 		}
 
 		return `${input.toFixed(2)} ${scale[i]}`;
 	};
-}
+};

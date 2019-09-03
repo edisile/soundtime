@@ -1,0 +1,31 @@
+<div class="music-player">
+    <div class="cover">
+        <img src="https://i1.sndcdn.com/artworks-000532281414-y16g53-original.jpg" alt="">   
+    </div>
+    
+    <div class="track-info">
+        <h1>{{$ctrl.title}}</h1>
+        <h3>{{$ctrl.artist}}</h3>
+    </div>
+
+    <div class="player-controls">
+        <div class="play-button" ng-click="$ctrl.playPause()">
+            <img class="play-icon" ng-if="!$ctrl.isPlaying" src="./assets/img/play.svg"></img>
+            <img class="play-icon" ng-if="$ctrl.isPlaying" src="./assets/img/pause.svg"></img>
+        </div>
+
+        <span id="time">
+            <span id="current-time" ng-bind="currentTime | secondsToTimeFilter"></span>
+
+            <span id="duration-time" ng-bind="duration | secondsToTimeFilter"></span>
+        </span>
+
+        <audio>
+            <source ng-if="$ctrl.trackInfoService.trackDetails.preview" src="{{$ctrl.trackInfoService.trackDetails.preview}}" type="audio/ogg"/>
+        </audio>
+
+        <div id="seek-bar" ng-click="$ctrl.seek($event)">
+            <span id="seek-value" style="width: {{$ctrl.seekValue * 100}}%;"></span>
+        </div>
+    </div>
+</div>
