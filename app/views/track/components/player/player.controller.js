@@ -2,23 +2,26 @@
 class PlayerController {
 	constructor($element, $scope, trackInfoService) {
 		this.trackInfoService = trackInfoService;
-		this.title = "Ayyyy";
-		this.artist = "Lmaoooo";
-		this.$scope = $scope;
-		this.seekValue = 0;
-		this.seekBar = angular.element(document.querySelector('#seek-bar'))[0];
 		
+		this.$scope = $scope;
+		this.isPlaying = false;
+		this.seekValue = 0;
+		
+		this.seekBar = angular.element(document.querySelector('#seek-bar'))[0];
 		this.audio = angular.element($element[0]).find("audio")[0];
 
 		// Getting lenght
-		this.audio.oncanplay = ($event) => {
+		this.audio.onloadedmetadata = ($event) => {
 			$scope.duration = this.audio.duration;
+			$scope.$evalAsync();
 		}
 		
-		this.isPlaying = false;
+		this.audio.onended = ($event) => {
+			this.isPlaying = false;
+		}
 
+		// Updating current time
 		this.audio.ontimeupdate = ($event) => {
-			//console.log(this.currentTime)
 			$scope.currentTime = this.audio.currentTime;
 			this.seekValue = this.audio.currentTime / this.audio.duration;
 			$scope.$evalAsync();
@@ -26,8 +29,16 @@ class PlayerController {
 	}
 
 	seek($event) {
-		this.seekValue = $event.offsetX / this.seekBar.offsetWidth;
-		this.audio.currentTime = this.seekValue * this.audio.duration;
+		console.log($event.offsetX)
+		let newSeek = $event.offsetX / (this.seekBar.offsetWidth - 42);
+		// 							42 px offset because of padding ^
+		let newTime = newSeek * this.audio.duration;
+		
+		console.log(newSeek, newTime)
+		if (newSeek !== Infinity && !isNaN(newTime)){	
+			this.seekValue = newSeek;
+			this.audio.currentTime = newTime;
+		}
 	}
 
 	playPause() {

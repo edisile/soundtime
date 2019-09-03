@@ -39,58 +39,64 @@
         </div>
     </div> -->
 
-    <player class="hero-body"></player>
-
-    <div class="hero-body has-text-centered">
-        <div class="content is-small">
-            <h2 ng-hide="trackInfoService.error">File details</h2>
-
-            <div class="spinner" ng-show="trackInfoService.pendingRequest && trackInfoService.error == undefined"></div>
-
-            <div ng-hide="trackInfoService.pendingRequest || trackInfoService.error != undefined">
-                <div>
-                    <b>Name:</b> {{trackInfoService.trackDetails.filename}}
-                </div>
-                
-                <div>
-                    <b>Size:</b> {{trackInfoService.trackDetails.size | fileSizeFilter}}
-                </div>
-                
-                <div>
-                    <b>Type:</b> {{trackInfoService.trackDetails.fileType}}
-                </div>
-                
-                <div>
-                    <b>Upload date:</b> {{trackInfoService.trackDetails.uploadDate}}
-                </div>
-            </div>
-
-            <div class="is-size-3 has-text-danger" ng-show="trackInfoService.error">
-                <b>Error, this file does not exist</b>
-            </div>
+    <div class="columns">
+        <div class="column">
+            <player class="hero-body"></player>
         </div>
 
-        <br>
+        <div class="column">
+            <div class="hero-body has-text-centered">
+                <div class="content is-small">
+                    <h2 ng-hide="trackInfoService.error">File details</h2>
 
-        <div class="has-text-centered" ng-hide="trackInfoService.error">
-            <button class="button is-primary" ng-click="$ctrl.downloadTrack()" 
-                    ng-class="{'is-success': downloadStarted, 'is-danger': errorDuringRequest}">
+                    <div class="spinner" ng-show="trackInfoService.pendingRequest && trackInfoService.error == undefined"></div>
 
-                <span class="icon">
-                    <i class="mdi mdi-24px mdi-download" ng-if="!(waitingForDownload || downloadStarted)"></i>
-                    
-                    <i class="mdi mdi-24px mdi-check" ng-if="downloadStarted"></i>
+                    <div ng-hide="trackInfoService.pendingRequest || trackInfoService.error != undefined">
+                        <div>
+                            <b>Name:</b> {{trackInfoService.trackDetails.filename}}
+                        </div>
+                        
+                        <div>
+                            <b>Size:</b> {{trackInfoService.trackDetails.size | fileSizeFilter}}
+                        </div>
+                        
+                        <div>
+                            <b>Type:</b> {{trackInfoService.trackDetails.fileType}}
+                        </div>
+                        
+                        <div>
+                            <b>Upload date:</b> {{trackInfoService.trackDetails.uploadDate}}
+                        </div>
+                    </div>
 
-                    <i class="mdi mdi-24px mdi-alert-circle" ng-if="errorDuringRequest"></i>
+                    <div class="is-size-3 has-text-danger" ng-show="trackInfoService.error">
+                        <b>Error, this file does not exist</b>
+                    </div>
+                </div>
 
-                    <div class="spinner" ng-if="waitingForDownload && !downloadStarted"></div>
-                </span>
+                <br>
 
-                <span>
-                    Download
-                </span>
+                <div class="has-text-centered" ng-hide="trackInfoService.error">
+                    <button class="button is-primary" ng-click="$ctrl.downloadTrack()" 
+                            ng-class="{'is-success': downloadStarted, 'is-danger': errorDuringRequest}">
 
-            </button>
+                        <span class="icon">
+                            <i class="mdi mdi-24px mdi-download" ng-if="!(waitingForDownload || downloadStarted)"></i>
+                            
+                            <i class="mdi mdi-24px mdi-check" ng-if="downloadStarted"></i>
+
+                            <i class="mdi mdi-24px mdi-alert-circle" ng-if="errorDuringRequest"></i>
+
+                            <div class="spinner" ng-if="waitingForDownload && !downloadStarted"></div>
+                        </span>
+
+                        <span>
+                            Download
+                        </span>
+
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
