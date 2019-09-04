@@ -1,15 +1,11 @@
-<div class="hero container is-fluid" ng-style="playing ? {'background-color': colors.accentStrong, transition: 'color 1500ms'} : {transition: 'color 1500ms'}">
-    <!--<div class="columns is-desktop is-centered is-vcentered is-multiline">
+<div class="hero is-fullheight-with-navbar">
+    <!-- <div class="columns is-desktop is-centered is-vcentered is-multiline">
         <div class="column is-one-third-desktop">
-            <p class="image">
-                <img color-watch src="./assets/img/enemy.png">
-                    <div class="square" style="background-color: #8e5741;">
-                        <div class="line" style="background-color: #d4b4a4;"></div>
-                        <div class="line" style="background-color: #e3cec4;"></div>
-                        <div class="line" style="background-color: #d3b2a2;"></div>
-                    </div>
-                </img>
-            </p>
+            <div class="square" style="background-color: {{colors.primary}};">
+                <div class="line" style="background-color: {{colors.accent}};"></div>
+                <div class="line" style="background-color: {{colors.primText}};"></div>
+                <div class="line" style="background-color: {{colors.secText}};"></div>
+            </div>
         </div>
         
         <div class="column is-three-fifths-desktop">
@@ -37,19 +33,19 @@
                 </button>
             </div>
         </div>
-    </div> -->
+    </div>  -->
 
-    <div class="columns">
-        <div class="column">
-            <player class="hero-body"></player>
+    <div class="columns is-centered is-vcentered">
+        <div class="column is-5" ng-hide="trackInfoService.error">
+            <player class="hero-body" tags="trackInfoService.trackDetails.tags" preview-source="trackInfoService.trackDetails.preview"></player>
         </div>
 
-        <div class="column">
-            <div class="hero-body has-text-centered">
+        <div class="column is-5">
+            <div class="has-text-centered">
                 <div class="content is-small">
                     <h2 ng-hide="trackInfoService.error">File details</h2>
 
-                    <div class="spinner" ng-show="trackInfoService.pendingRequest && trackInfoService.error == undefined"></div>
+                    <div class="spinner is-medium" ng-show="trackInfoService.pendingRequest && trackInfoService.error == undefined"></div>
 
                     <div ng-hide="trackInfoService.pendingRequest || trackInfoService.error != undefined">
                         <div>
@@ -76,26 +72,23 @@
 
                 <br>
 
-                <div class="has-text-centered" ng-hide="trackInfoService.error">
-                    <button class="button is-primary" ng-click="$ctrl.downloadTrack()" 
-                            ng-class="{'is-success': downloadStarted, 'is-danger': errorDuringRequest}">
+                <button class="button has-text-centered is-primary" ng-hide="trackInfoService.error" ng-click="$ctrl.downloadTrack()" 
+                        ng-class="{'is-success': downloadStarted, 'is-danger': errorDuringRequest}">
 
-                        <span class="icon">
-                            <i class="mdi mdi-24px mdi-download" ng-if="!(waitingForDownload || downloadStarted)"></i>
-                            
-                            <i class="mdi mdi-24px mdi-check" ng-if="downloadStarted"></i>
+                    <span class="icon">
+                        <i class="mdi mdi-24px mdi-download" ng-if="!(waitingForDownload || downloadStarted)"></i>
+                        
+                        <i class="mdi mdi-24px mdi-check" ng-if="downloadStarted"></i>
 
-                            <i class="mdi mdi-24px mdi-alert-circle" ng-if="errorDuringRequest"></i>
+                        <i class="mdi mdi-24px mdi-alert-circle" ng-if="errorDuringRequest"></i>
 
-                            <div class="spinner" ng-if="waitingForDownload && !downloadStarted"></div>
-                        </span>
+                        <div class="spinner" ng-if="waitingForDownload && !downloadStarted"></div>
+                    </span>
 
-                        <span>
-                            Download
-                        </span>
-
-                    </button>
-                </div>
+                    <span>
+                        Download
+                    </span>
+                </button>
             </div>
         </div>
     </div>

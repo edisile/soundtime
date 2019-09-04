@@ -6,7 +6,7 @@ export default () => (
 		bindToController: {
 			// Bind attributes here
 		},
-		controller: ['$element', '$rootScope', 'colorService', colorWatchController]
+		controller: ['$element', 'colorService', colorWatchController]
 		    // $element is the element to which the directive is attached
 	}
 );

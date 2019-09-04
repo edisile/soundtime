@@ -4,8 +4,9 @@
     width: 400px;
     margin: auto;
     border-radius: 10px 10px 10px 10px;
-    background: transparent linear-gradient(to bottom, #00000000 65%, #f06564ff 400px);
+    background: transparent linear-gradient(to bottom, #00000000 50%, #3273dc 400px);
     box-shadow: 0px 5px 10px 0px #00000055;
+    transition:.2s;
 }
 
 .cover {
@@ -55,9 +56,10 @@
     height: 64px;
     width: 64px;
     border-radius: 32px;
-    background-color: red;
-    box-shadow: 0px 2px 4px 0px #00000077;
+    background-color: #00d1b2;
+    box-shadow: 0px 6px 12px 0px #00000044;
     transition:.25s;
+    z-index: 1;
 }
 
 .play-icon {
@@ -66,12 +68,13 @@
 }
 
 .play-button:hover {
-    height: 66px;
-    width: 66px;
+    height: 68px;
+    width: 68px;
+    border-radius: 34px;
     right: -18px;
-    bottom: -15px;
-    box-shadow: 0px 4px 8px 0px #00000044;
-    transition:.25s;
+    bottom: -18px;
+    box-shadow: 0px 7px 14px 0px #00000044;
+    transition:.2s;
 }
 
 #seek-bar {
@@ -80,10 +83,12 @@
     border-radius: 0px 0px 10px 10px;
     overflow: hidden;
     padding-right: 42px;
+    transition:.2s;
 }
 
+
 #seek-value {
-    background-color: cyan;
+    background-color: #00d1b2;
     display: block;
     height: inherit;
     width: inherit;
@@ -91,7 +96,7 @@
 }
 
 #seek-value:hover {
-    filter: brightness(80%);
+    filter: brightness(120%);
     transition:.25s;
 }
 

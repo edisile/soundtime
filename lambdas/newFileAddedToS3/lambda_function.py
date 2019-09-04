@@ -1,11 +1,20 @@
+from base64 import b64encode
 from datetime import datetime
 from io import BytesIO
-from tinytag import TinyTag
+from tinytag import TinyTag as tt
 import boto3
 import os
 import subprocess
 
 FFMPEG_STATIC = "/var/task/ffmpeg"
+
+TYPES = {
+    "audio/mp3": ".mp3",
+    "audio/ogg": ".ogg",
+    "audio/flac": ".flac",
+    "audio/x-m4a": ".m4a",
+    "audio/wav": ".wav"
+}
 
 """
     When a new file is added to the data bucket check if it matches a file 
@@ -35,25 +44,46 @@ def lambda_handler(event, context):
     try:
         # Let"s update the DB entry to "enable" it
         fileId = response["Items"][0]["fileId"]["S"]
-        
-        response = db.update_item(
-            TableName = "soundtime-data",
-            Key = {
-                "fileId": {"S": fileId},
-            },
-            AttributeUpdates = {
-                "active": {
-                    "Value": {"BOOL": True}
-                },
+        fileType = response["Items"][0]["type"]["S"]
+
+        extension = TYPES[fileType]
+        tmpFile = "file" + extension
+
+        # Get the audio from S3
+        audioData = grabFromS3(s3Bucket, s3ObjectKey, s3)
+
+        # Write it to a file in /tmp/
+        os.system("chmod -R 775 /tmp")
+        os.chdir("/tmp/")
+        with open(tmpFile, "wb") as f:
+            f.write(audioData.read())
+
+        process = convertAudio(tmpFile)
+
+        if extractCover(tmpFile) == 0:
+            # File had cover art so we must load it
+            with open("cover.jpg", "rb") as f:
+                b64ImgStr = "data:image/jpg;base64," + \
+                                b64encode(f.read()).decode("utf-8")
+        else: 
+            b64ImgStr = ""
+
+        attrUpdates = {
                 "lastAccess": {
                     "Value": {"S": datetime.isoformat(datetime.now())}
+                },
+                "image": {
+                    "Value": {"S": b64ImgStr}
                 }
             }
-        )
-        
-        process = convertAudio(s3Bucket, s3ObjectKey, s3)
 
-        ###                      Do more stuff here                     ###
+        # Get title, artist and album maybe, then add them to dynamodb
+        tags = tt.get(tmpFile).as_dict();
+        for key in ["title", "artist", "album"]:
+            if tags[key]:
+                attrUpdates[key] = {
+                    "Value": {"S": tags[key]}
+                }
 
         process.wait()
 
@@ -62,29 +92,34 @@ def lambda_handler(event, context):
 
         pushToS3(s3Bucket, s3ObjectKey, s3)
 
+
+
+        response = db.update_item(
+            TableName = "soundtime-data",
+            Key = {
+                "fileId": {"S": fileId},
+            },
+            AttributeUpdates = attrUpdates
+        )
+
         return
 
     except (IndexError, KeyError) as e:
         "Ok, this file doesn't exist in the DB for some reason... :|"
         raise e
 
-def convertAudio(bucket, s3Key, s3Client):
-    # Get the audio from S3
-    audioData = grabFromS3(bucket, s3Key, s3Client)
-
-    # Write it to a file in /tmp/
-    os.system("chmod -R 775 /tmp")
-    with open("/tmp/" + s3Key, "wb") as f:
-        f.write(audioData.read())
-    os.chdir("/tmp/")
-
+def convertAudio(filename):
     # Convert using ffmpeg
     process = subprocess.Popen(
-                [FFMPEG_STATIC, "-y", "-i", s3Key, "-c:a", "libvorbis", 
+                [FFMPEG_STATIC, "-y", "-i", filename, "-c:a", "libvorbis", 
                         "-b:a", "128k", "-vn", "converted_file.ogg"], 
                 stdin=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
     return process
+
+def extractCover(filename):
+    return subprocess.call([FFMPEG_STATIC, "-y", "-i", filename, "-an", "-vf", 
+                "scale=500:500", "cover.jpg"], stderr=subprocess.DEVNULL)
 
 def grabFromS3(bucket, s3Key, s3Client):
     obj = s3Client.get_object(Bucket=bucket, Key=s3Key)

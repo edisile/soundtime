@@ -1,6 +1,7 @@
 /* @ngInject */
 class TrackController {
-    constructor($http, $scope, $routeParams, trackInfoService, /*colorService, playerService*/) {
+    constructor($http, $scope, $routeParams, trackInfoService, colorService) {
+        colorService.reset()
         this.$http = $http;
         this.$scope = $scope;
         this.id = $routeParams.trackId;
@@ -12,7 +13,6 @@ class TrackController {
         this.trackInfoService.getInfo($routeParams.trackId);
 
         //this.colorService = colorService;
-        //this.playerService = playerService;
 
         this.$scope.playing = false;
         

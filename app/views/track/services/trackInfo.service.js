@@ -33,7 +33,6 @@ class TrackInfoService {
 		promise.then(
 				// On success
 				(response) => {
-					console.log(this)
 					for (let k in response.data) {
 						if (response.data.hasOwnProperty(k)) 
 							this.trackDetails[k] = response.data[k];

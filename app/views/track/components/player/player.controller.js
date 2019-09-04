@@ -1,9 +1,9 @@
 /* @ngInject */
 class PlayerController {
-	constructor($element, $scope, trackInfoService) {
-		this.trackInfoService = trackInfoService;
-		
+	constructor($element, $scope, colorService) {
 		this.$scope = $scope;
+		this.$scope.colors = colorService.colors;
+
 		this.isPlaying = false;
 		this.seekValue = 0;
 		
@@ -13,11 +13,20 @@ class PlayerController {
 		// Getting lenght
 		this.audio.onloadedmetadata = ($event) => {
 			$scope.duration = this.audio.duration;
+
 			$scope.$evalAsync();
 		}
 		
 		this.audio.onended = ($event) => {
 			this.isPlaying = false;
+		}
+
+		this.audio.onpause = ($event) => {
+			this.isPlaying = false;
+		}
+
+		this.audio.onplay = ($event) => {
+			this.isPlaying = true;
 		}
 
 		// Updating current time
@@ -29,13 +38,11 @@ class PlayerController {
 	}
 
 	seek($event) {
-		console.log($event.offsetX)
 		let newSeek = $event.offsetX / (this.seekBar.offsetWidth - 42);
-		// 							42 px offset because of padding ^
+		// 						   42 px offset because of padding ^^^
 		let newTime = newSeek * this.audio.duration;
 		
-		console.log(newSeek, newTime)
-		if (newSeek !== Infinity && !isNaN(newTime)){	
+		if ( newSeek !== Infinity && !isNaN(newTime) ){	
 			this.seekValue = newSeek;
 			this.audio.currentTime = newTime;
 		}
@@ -43,7 +50,6 @@ class PlayerController {
 
 	playPause() {
 		this.isPlaying ? this.audio.pause() : this.audio.play();
-		this.isPlaying = !this.isPlaying;
 	}
 }
 

@@ -1,32 +1,38 @@
 /* @ngInject */
 class ColorService {
 	constructor($rootScope) {
-		console.log("colorService");
 		this.$rootScope = $rootScope;
 		
 		this.colors = {
 			primary: "#00d1b2",
 			accent: "#3273dc",
-			accentStrong: "#3273dc"
+			primText: "#383838",
+			secText: "#717171"
 		};
 
 		this.$rootScope.colors = this.colors;
 	}
 
-	changePrimary(newPrimary) {
-		this.colors.primary = newPrimary;
+	changeColors(primary, accent, primText, secText) {
+		this.colors.primary = primary;
+		this.colors.accent = accent;
+		this.colors.primText = primText;
+		this.colors.secText = secText;
+		
+		this.$rootScope.$evalAsync();
 	}
 
-	changeAccent(newAccent) {
-		this.colors.accent = newAccent;
-	}
+	reset() {
+		const defaultColors = {
+			primary: "#00d1b2",
+			accent: "#3273dc",
+			primText: "#383838",
+			secText: "#717171"
+		};
 
-	changeAccentStrong(newAccentStrong) {
-		this.colors.accentStrong = newAccentStrong;
-	}
-
-	update() {
-		this.$rootScope.$apply();
+		for (const color in this.colors) {
+			this.colors[color] = defaultColors[color];
+		}
 	}
 }
 

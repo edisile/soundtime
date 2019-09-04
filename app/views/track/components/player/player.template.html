@@ -1,26 +1,29 @@
-<div class="music-player">
+<div class="music-player" 
+        style="background: transparent linear-gradient(to bottom,#00000000 50%,{{colors.primary}} 400px);">
     <div class="cover">
-        <img src="https://i1.sndcdn.com/artworks-000532281414-y16g53-original.jpg" alt="">   
+        <div ng-if="$ctrl.tags == undefined" class="cover spinner is-very-large"></div>
+        <img color-watch ng-if="$ctrl.tags.image" src="{{$ctrl.tags.image}}" alt="">
+        <img ng-if="!$ctrl.tags.image" src="./assets/img/file_placeholder.svg" alt="">
     </div>
 
     <div class="player-controls">
-        <div class="play-button" ng-click="$ctrl.playPause()">
+        <div class="play-button" ng-click="$ctrl.playPause()" style="background-color: {{colors.accent}}">
             <img class="play-icon" ng-if="!$ctrl.isPlaying" src="./assets/img/play.svg"></img>
             <img class="play-icon" ng-if="$ctrl.isPlaying" src="./assets/img/pause.svg"></img>
         </div>
 
         <span id="time">
-            <span id="current-time" ng-bind="currentTime | secondsToTimeFilter"></span>
+            <b id="current-time" ng-bind="currentTime | secondsToTimeFilter" style="color: {{colors.primText}}"></b>
 
-            <span id="duration-time" ng-bind="duration | secondsToTimeFilter"></span>
+            <b id="duration-time" ng-bind="duration | secondsToTimeFilter" style="color: {{colors.primText}}"></b>
         </span>
 
         <audio>
-            <source ng-if="$ctrl.trackInfoService.trackDetails.preview" src="{{$ctrl.trackInfoService.trackDetails.preview}}" type="audio/ogg"/>
+            <source ng-if="$ctrl.previewSource" src="{{$ctrl.previewSource}}" type="audio/ogg"/>
         </audio>
 
         <div id="seek-bar" ng-click="$ctrl.seek($event)">
-            <span id="seek-value" style="width: {{$ctrl.seekValue * 100}}%;"></span>
+            <span id="seek-value" style="background-color: {{colors.accent}}; width: {{$ctrl.seekValue * 100}}%;"></span>
         </div>
     </div>
 </div>

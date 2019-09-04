@@ -3,46 +3,85 @@ import tc from 'tinycolor2';
 
 /* @ngInject */
 class ColorWatchController {
-	constructor($element, $rootScope, colorService) {
+	constructor($element, colorService) {
 		this.element = $element[0];
-		this.$rootScope = $rootScope;
 		this.primary, this.accent, this.primaryText, this.secondaryText;
 
 		this.element.addEventListener('load',
 			() => {
+				let i = new Image(500, 500);
+				i.src = this.element.src;
+
 				// For some reason higher quality == bigger downsampling, wtf
-				let v = new V(this.element, {colorCount: 16, quality: 500});
+				let v = new V(i, { quality: 1.5 });
 
 				v.getPalette().then(
 					(palette) => {
-						this.primary = palette.Vibrant.getHex();
-						
-						// Make a new palette extractor with better quality
-						v = new V(this.element);
+						// Get dominant color swatches
+						let ps = { population: 0 };
+						let as = { population: 0 };
 
-						v.getPalette().then(
-							(palette) => {
-								this.accent = palette.DarkMuted.getHex();
+						delete palette.Muted; // No one likes muted colors
+						console.log(palette);
 
-								// if (tc.readability( tc(this.primary), 
-								// 					tc(this.accent) ) < 4.5) {
-								// 	this.accent = palette.LightVibrant.getHex();
-								// 	let x = this.findContrastColor(tc(this.primary), tc(this.accent), true, true, 4)
-								// 	console.log(x.toHexString())
-								// }
+						for (const swatch in palette) {
+							if (palette[swatch].population > as.population) {
+								as = palette[swatch];
 
-								this.getTextColors(this.primary, this.accent);
-
-								console.log(this.primary, this.accent,
-									this.primaryText, this.secondaryText)
+								if (as.population > ps.population) {
+									[as, ps] = [ps, as]; // Swap
+								}
 							}
-						);
+						}
+
+						// console.log(ps);
+						// console.log(as);
+						// console.log(colors);
+
+						if ( ps.getHex() === palette.Vibrant.getHex() ) {
+							[as, ps] = [ps, as];
+						}
 						
+						this.primary = ps.getHex();
+						this.accent = as.getHex();
+
+						let p = tc(this.primary);
+						let a = tc(this.accent);
+
+						let contrast = tc.readability(p, a);
+						let dE = this.deltaE(p.toRgb(), a.toRgb());
+
+						console.log(`dE = ${dE}\ncontrast = ${contrast}`);
+						let i = 0;
+						while ( i++ < 10 && (dE < 30 || contrast < 4) ) {
+
+							p.isLight() ? a.darken(5) : a.lighten(5);
+							
+							// a.saturate(15);
+							// p.saturate(15);
+														
+							// a = this.findContrastColor(p, a, true, p.isLight(), 4.5);
+							this.accent = a.toHexString();
+
+							dE = this.deltaE(p.toRgb(), a.toRgb());
+							contrast = tc.readability(p, a);
+
+							console.log(`dE = ${dE}\ncontrast = ${contrast}`);
+
+							if (dE >= 50) break;
+						}
+
+						this.getTextColors(this.primary, this.accent);
+
+						console.log(this.primary, this.accent,
+							this.primaryText, this.secondaryText)
+
+						colorService.changeColors(this.primary, this.accent,
+							this.primaryText, this.secondaryText);
 					}
 				);
 			}
 		);
-		
 	}
 
 	getTextColors(primary, accent) {
@@ -80,7 +119,7 @@ class ColorWatchController {
 		let fg = findFg ? color : other;
 		let bg = findFg ? other : color;
 
-		if (tc.readability(fg, bg) >= minRatio) return color;
+		if (tc.readability(fg, bg) >= minRatio) return fg;
 
 		let c = findFg ? fg.toHsl() : bg.toHsl();
 		let low = 0, high = c.l; // c.l is the luminance of the color
@@ -101,6 +140,43 @@ class ColorWatchController {
 		}
 
 		return tc({h: c.h, s: c.s, l:low});
+	}
+
+	deltaE(rgbA, rgbB) {
+		let labA = this.rgb2lab(rgbA);
+		let labB = this.rgb2lab(rgbB);
+		let deltaL = labA[0] - labB[0];
+		let deltaA = labA[1] - labB[1];
+		let deltaB = labA[2] - labB[2];
+		let c1 = Math.sqrt(labA[1] * labA[1] + labA[2] * labA[2]);
+		let c2 = Math.sqrt(labB[1] * labB[1] + labB[2] * labB[2]);
+		let deltaC = c1 - c2;
+		let deltaH = deltaA * deltaA + deltaB * deltaB - deltaC * deltaC;
+		deltaH = deltaH < 0 ? 0 : Math.sqrt(deltaH);
+		let sc = 1.0 + 0.045 * c1;
+		let sh = 1.0 + 0.015 * c1;
+		let deltaLKlsl = deltaL / (1.0);
+		let deltaCkcsc = deltaC / (sc);
+		let deltaHkhsh = deltaH / (sh);
+		let i = deltaLKlsl * deltaLKlsl + deltaCkcsc * deltaCkcsc + deltaHkhsh * deltaHkhsh;
+
+		return i < 0 ? 0 : Math.sqrt(i);
+	}
+
+	rgb2lab({r, g, b}){
+		let x, y, z;
+		r /= 255; g /= 255; b /= 255;
+
+		r = (r > 0.04045) ? Math.pow((r + 0.055) / 1.055, 2.4) : r / 12.92;
+		g = (g > 0.04045) ? Math.pow((g + 0.055) / 1.055, 2.4) : g / 12.92;
+		b = (b > 0.04045) ? Math.pow((b + 0.055) / 1.055, 2.4) : b / 12.92;
+		x = (r * 0.4124 + g * 0.3576 + b * 0.1805) / 0.95047;
+		y = (r * 0.2126 + g * 0.7152 + b * 0.0722) / 1.00000;
+		z = (r * 0.0193 + g * 0.1192 + b * 0.9505) / 1.08883;
+		x = (x > 0.008856) ? Math.pow(x, 1/3) : (7.787 * x) + 16/116;
+		y = (y > 0.008856) ? Math.pow(y, 1/3) : (7.787 * y) + 16/116;
+		z = (z > 0.008856) ? Math.pow(z, 1/3) : (7.787 * z) + 16/116;
+		return [(116 * y) - 16, 500 * (x - y), 200 * (y - z)]
 	}
 }
 

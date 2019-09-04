@@ -27,6 +27,18 @@ body {
 	justify-content: center;
 }
 
+.spinner.is-medium {
+	font-size: 25;
+}
+
+.spinner.is-large {
+	font-size: 50;
+}
+
+.spinner.is-very-large {
+	font-size: 100;
+}
+
 .spinner:after {
 	animation: changeContent .8s linear infinite;
 	content: "⠋";
