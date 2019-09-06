@@ -18,70 +18,98 @@ class ColorWatchController {
 				v.getPalette().then(
 					(palette) => {
 						// Get dominant color swatches
-						let ps = { population: 0 };
-						let as = { population: 0 };
+						let ps, as;
 
-						delete palette.Muted; // No one likes muted colors
-						console.log(palette);
-
-						for (const swatch in palette) {
-							if (palette[swatch].population > as.population) {
-								as = palette[swatch];
-
-								if (as.population > ps.population) {
-									[as, ps] = [ps, as]; // Swap
-								}
-							}
-						}
+						[ps, as] = this.getMainColors(palette);
 
 						// console.log(ps);
 						// console.log(as);
-						// console.log(colors);
-
-						if ( ps.getHex() === palette.Vibrant.getHex() ) {
-							[as, ps] = [ps, as];
-						}
 						
 						this.primary = ps.getHex();
 						this.accent = as.getHex();
 
-						let p = tc(this.primary);
-						let a = tc(this.accent);
+						this.enhanceMainColors();
 
-						let contrast = tc.readability(p, a);
-						let dE = this.deltaE(p.toRgb(), a.toRgb());
+						[this.primaryText, this.secondaryText] = 
+								this.getTextColors(this.primary, this.accent);
 
-						console.log(`dE = ${dE}\ncontrast = ${contrast}`);
-						let i = 0;
-						while ( i++ < 10 && (dE < 30 || contrast < 4) ) {
+						this.accentText = tc.mostReadable(this.accent, 
+								["white", this.primary, this.primaryText, 
+									this.secondaryText]).toHexString();
 
-							p.isLight() ? a.darken(5) : a.lighten(5);
-							
-							// a.saturate(15);
-							// p.saturate(15);
-														
-							// a = this.findContrastColor(p, a, true, p.isLight(), 4.5);
-							this.accent = a.toHexString();
-
-							dE = this.deltaE(p.toRgb(), a.toRgb());
-							contrast = tc.readability(p, a);
-
-							console.log(`dE = ${dE}\ncontrast = ${contrast}`);
-
-							if (dE >= 50) break;
-						}
-
-						this.getTextColors(this.primary, this.accent);
-
-						console.log(this.primary, this.accent,
-							this.primaryText, this.secondaryText)
-
-						colorService.changeColors(this.primary, this.accent,
-							this.primaryText, this.secondaryText);
+						colorService.changeColors(
+							{
+								primary: this.primary,
+								accent: this.accent,
+								accText: this.accentText,
+								primText: this.primaryText,
+								secText: this.secondaryText
+							}
+						);
 					}
 				);
 			}
 		);
+	}
+
+	getMainColors(palette) {
+		let ps, as;
+		let colors = Object.values(palette).sort(
+			(a, b) => {
+				return a.population > b.population ? -1 : 1;
+			}
+		);
+
+		// console.log(palette);
+
+		if ( (palette.Muted.population / colors[1].population) < 2 && 
+				(palette.Muted.population / colors[2].population) < 3 ) {
+
+			// The image isn't mostly muted so whatever
+			// console.log("Removing muted");
+			delete palette.Muted; // No one likes muted colors anyway...
+
+			colors = Object.values(palette).sort(
+				(a, b) => {
+					return a.population > b.population ? -1 : 1;
+				}
+			);
+		}
+
+		ps = colors[0]; as = colors[1];
+
+		if ( ps.getHex() === palette.Vibrant.getHex() ) {
+			// Vibrant color might be too strong for a primary
+			// console.log("Swapping vibrant to accent");
+			[as, ps] = [ps, as];
+		}
+
+		return [ps, as];
+	}
+
+	enhanceMainColors() {
+		let p = tc(this.primary);
+		let a = tc(this.accent);
+
+		let contrast = tc.readability(p, a);
+		let dE = this.deltaE(p.toRgb(), a.toRgb());
+		// console.log(`dE = ${dE}\ncontrast = ${contrast}`);
+
+		let i = 0;
+		while ( i++ < 10 && (dE < 30 || contrast < 4) ) {
+
+			// console.log(p.toHexString(), a.toHexString())
+			p.isLight() ? a.darken(5) : a.lighten(5);
+										
+			this.accent = a.toHexString();
+
+			dE = this.deltaE(p.toRgb(), a.toRgb());
+			contrast = tc.readability(p, a);
+
+			// console.log(`dE = ${dE}\ncontrast = ${contrast}`);
+
+			if (dE >= 45) break;
+		}
 	}
 
 	getTextColors(primary, accent) {
@@ -111,8 +139,7 @@ class ColorWatchController {
 			}
 		}
 
-		this.primaryText = primTextCol.toHexString(); 
-		this.secondaryText = secTextCol.toHexString();
+		return [primTextCol.toHexString(), secTextCol.toHexString()];
 	}
 
 	findContrastColor(color, other, findFg, lightBg, minRatio) {

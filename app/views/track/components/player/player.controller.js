@@ -6,6 +6,7 @@ class PlayerController {
 
 		this.isPlaying = false;
 		this.seekValue = 0;
+		this.showRemainingTime = false;
 		
 		this.seekBar = angular.element(document.querySelector('#seek-bar'))[0];
 		this.audio = angular.element($element[0]).find("audio")[0];

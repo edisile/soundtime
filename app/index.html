@@ -1,11 +1,11 @@
-<html lang="en">
+<html lang="en" ng-app="soundtime">
     <head>
         <meta charset="utf-8">
-        <title>Soundtime</title>
+        <title ng-bind-template="{{viewTitle ? viewTitle + ' - ' : Soundtime}}Soundtime"></title>
     </head>
 
     <body class="has-navbar-fixed-top">
-        <div ng-app="soundtime" ng-cloak>
+        <div>
             <navbar></navbar>
 
             <div ng-view class="is-unselectable"></div>

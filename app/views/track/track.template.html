@@ -1,3 +1,7 @@
+<view-title>{{trackInfoService.pendingRequest ? 
+                "Waiting" : trackInfoService.trackDetails.tags.title ? 
+                    trackInfoService.trackDetails.tags.title + ' by ' + trackInfoService.trackDetails.tags.artist : trackInfoService.trackDetails.filename}}</view-title>
+
 <div class="hero is-fullheight-with-navbar">
     <!-- <div class="columns is-desktop is-centered is-vcentered is-multiline">
         <div class="column is-one-third-desktop">
@@ -36,11 +40,11 @@
     </div>  -->
 
     <div class="columns is-centered is-vcentered">
-        <div class="column is-5" ng-hide="trackInfoService.error">
+        <div class="column is-5-dekstop" ng-hide="trackInfoService.error">
             <player class="hero-body" tags="trackInfoService.trackDetails.tags" preview-source="trackInfoService.trackDetails.preview"></player>
         </div>
 
-        <div class="column is-5">
+        <div class="column is-5-dekstop">
             <div class="has-text-centered">
                 <div class="content is-small">
                     <h2 ng-hide="trackInfoService.error">File details</h2>

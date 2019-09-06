@@ -6,6 +6,7 @@ class ColorService {
 		this.colors = {
 			primary: "#00d1b2",
 			accent: "#3273dc",
+			accText: "#ffffff",
 			primText: "#383838",
 			secText: "#717171"
 		};
@@ -13,9 +14,10 @@ class ColorService {
 		this.$rootScope.colors = this.colors;
 	}
 
-	changeColors(primary, accent, primText, secText) {
+	changeColors({primary, accent, accText, primText, secText}) {
 		this.colors.primary = primary;
 		this.colors.accent = accent;
+		this.colors.accText = accText;
 		this.colors.primText = primText;
 		this.colors.secText = secText;
 		
@@ -26,6 +28,7 @@ class ColorService {
 		const defaultColors = {
 			primary: "#00d1b2",
 			accent: "#3273dc",
+			accText: "#ffffff",
 			primText: "#383838",
 			secText: "#717171"
 		};
@@ -33,6 +36,8 @@ class ColorService {
 		for (const color in this.colors) {
 			this.colors[color] = defaultColors[color];
 		}
+
+		this.$rootScope.$evalAsync();
 	}
 }
 

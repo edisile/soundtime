@@ -1,12 +1,12 @@
 // Angular
 import angular from 'angular';
-import ngRoute from 'angular-route';
 
 // Libraries
+	// In-app routing
+import ngRoute from 'angular-route';
 	// Drag and drop file upload
 import angularUploads from '../node_modules/angular-uploads/dist/angular-uploads.min.js';
-	// On scroll events
-import scrollWatch from '../node_modules/angular-scroll-watch/build/angular-scroll-watch.min';
+import angularViewhead from '../node_modules/angularjs-viewhead/angularjs-viewhead.js';
 
 // Modules
 import commonModule from './common/common.module';
@@ -14,7 +14,7 @@ import configModule from './config/config.module';
 import trackModule from './views/track/track.module';
 import homeModule from './views/home/home.module';
 
-// Routing
+// Routing configuration
 import router from './router';
 
 // Styles
@@ -25,15 +25,13 @@ const required = [
 	'app.config',
 	'app.home',
 	'app.track',
+
 	'msl.uploads',
 	'ngRoute',
-	'pc035860.scrollWatch',
-	//'thatisuday.dropzone',
+	'viewhead'
 ];
 
-//dropzone.autoDiscover = false;
-
 // This is the app
-angular.module('soundtime', required)
-    .config(router)
-    .controller();
+let app = angular.module('soundtime', required)
+			.config(router)
+    		.controller();

@@ -20,8 +20,8 @@ commonModule.directive('colorWatch', colorWatchDirective);
 
 commonModule.filter('fileSizeFilter', fileSizeFilter);
 
+commonModule.service('apiUrlBuilderService', apiUrlBuilderService);
 commonModule.service('colorService', colorService);
 commonModule.service('uploadService', uploadService);
-commonModule.service('apiUrlBuilderService', apiUrlBuilderService);
 
 export default commonModule;

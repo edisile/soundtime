@@ -45,18 +45,6 @@ class TrackController {
                 }
         );
     }
-
-    playTrack() {
-        this.$scope.playing = !this.$scope.playing;
-        console.log(this.$scope.playing);
-        this.playerService.play();
-    }
-
-    pauseTrack() {
-        this.$scope.playing = !this.$scope.playing;
-        console.log(this.$scope.playing);
-        this.playerService.pause();
-    }
 }
 
 export default TrackController;
