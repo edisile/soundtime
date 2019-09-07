@@ -2,44 +2,8 @@
                 "Waiting" : trackInfoService.trackDetails.tags.title ? 
                     trackInfoService.trackDetails.tags.title + ' by ' + trackInfoService.trackDetails.tags.artist : trackInfoService.trackDetails.filename}}</view-title>
 
-<div class="hero is-fullheight-with-navbar">
-    <!-- <div class="columns is-desktop is-centered is-vcentered is-multiline">
-        <div class="column is-one-third-desktop">
-            <div class="square" style="background-color: {{colors.primary}};">
-                <div class="line" style="background-color: {{colors.accent}};"></div>
-                <div class="line" style="background-color: {{colors.primText}};"></div>
-                <div class="line" style="background-color: {{colors.secText}};"></div>
-            </div>
-        </div>
-        
-        <div class="column is-three-fifths-desktop">
-            <div class="title">Title</div>
-            
-            <div class="subtitle">Artist - Album</div>
-
-            <span class="is-pulled-left">Seek: {{seek}}</span>
-
-            <span class="is-pulled-right">Duration: {{duration}}</span>
-
-            <progress class="progress is-small is-primary" value=".15" max="1"></progress>
-
-            <div class="has-text-centered">
-                <button class="button is-primary is-large is-rounded" ng-show="!playing" ng-click="$ctrl.playTrack()">
-                    <span class="icon is-large">
-                        <i class="mdi mdi-48px mdi-play"></i>
-                    </span>
-                </button>
-
-                <button class="button is-primary is-large is-rounded" ng-show="playing" ng-click="$ctrl.pauseTrack()">
-                    <span class="icon is-large">
-                        <i class="mdi mdi-48px mdi-pause"></i>
-                    </span>
-                </button>
-            </div>
-        </div>
-    </div>  -->
-
-    <div class="columns is-centered is-vcentered">
+<div class="hero-body">
+    <div class="container has-text-centered columns is-centered is-vcentered is-multiline">
         <div class="column is-5-dekstop" ng-hide="trackInfoService.error">
             <player class="hero-body" tags="trackInfoService.trackDetails.tags" preview-source="trackInfoService.trackDetails.preview"></player>
         </div>
@@ -76,8 +40,7 @@
 
                 <br>
 
-                <button class="button has-text-centered is-primary" ng-hide="trackInfoService.error" ng-click="$ctrl.downloadTrack()" 
-                        ng-class="{'is-success': downloadStarted, 'is-danger': errorDuringRequest}">
+                <button class="button has-text-centered is-primary" ng-hide="trackInfoService.error" ng-click="$ctrl.downloadTrack()" ng-class="{'is-success': downloadStarted, 'is-danger': errorDuringRequest}" >
 
                     <span class="icon">
                         <i class="mdi mdi-24px mdi-download" ng-if="!(waitingForDownload || downloadStarted)"></i>

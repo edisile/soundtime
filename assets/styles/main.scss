@@ -1,7 +1,5 @@
 @charset "utf-8";
-@import "~bulma/bulma";
-
-//$primary: #00d1b2; // This is the same as the default
+@import '../../node_modules/bulma-extensions/bulma-tooltip/dist/css/bulma-tooltip.min.css';
 
 // Custom scrollbar
 ::-webkit-scrollbar {
@@ -9,7 +7,8 @@
 }
 
 ::-webkit-scrollbar-thumb {
-    background: $grey-light;
+    // background: $grey-light;
+    background: #afafaf;
 }
 
 ::-webkit-scrollbar-thumb:hover {

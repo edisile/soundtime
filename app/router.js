@@ -4,7 +4,7 @@ import homeViewTemplate from './views/home/home.template.html';
 import homeViewController from './views/home/home.controller';
 
 /* @ngInject */
-export default ($routeProvider) => {
+export default ($routeProvider, $locationProvider) => {
     $routeProvider
         .when('/', {
             template: homeViewTemplate,
@@ -21,10 +21,5 @@ export default ($routeProvider) => {
         });
 
 
-    // $locationProvider.html5Mode(true);
-    // ^ Do NOT uncomment this unless you're ready to face the consequences!
-    //
-    // html5mode is "bugged" (technically it is expected behaviour after all, but still...): html5mode disables
-    // #! routing and causes a 404 when refreshing the page while inside a routed view
-    // The only way to solve this while keeping html5mode active is adding server-side URL rewriting
-}
+    $locationProvider.html5Mode(true).hashPrefix('!');
+};

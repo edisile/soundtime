@@ -13,6 +13,9 @@ module.exports = (env) => {
         },
         entry: './app/app.js',
         devtool: isProduction ? '' : 'source-map', // Generate the source map only for dev builds
+        devServer: {
+            historyApiFallback: true
+        },
         output: {
             path: path.resolve(__dirname, 'dist'), // Output the build to ./dist
             filename: 'index.js' // Output the bundle as ./dist/index.js

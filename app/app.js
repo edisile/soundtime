@@ -11,8 +11,8 @@ import angularViewhead from '../node_modules/angularjs-viewhead/angularjs-viewhe
 // Modules
 import commonModule from './common/common.module';
 import configModule from './config/config.module';
-import trackModule from './views/track/track.module';
 import homeModule from './views/home/home.module';
+import trackModule from './views/track/track.module';
 
 // Routing configuration
 import router from './router';
@@ -32,6 +32,4 @@ const required = [
 ];
 
 // This is the app
-let app = angular.module('soundtime', required)
-			.config(router)
-    		.controller();
+let app = angular.module('soundtime', required).config(router);

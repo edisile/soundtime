@@ -13,6 +13,7 @@
     "babel-polyfill": "^6.8.0",
     "babel-standalone": "^6.7.7",
     "bulma": "^0.7.5",
+    "bulma-extensions": "^6.2.7",
     "bulma-modal-fx": "^1.1.1",
     "material-icons": "^0.3.1",
     "node-vibrant": "^3.1.3",

@@ -1,27 +1,29 @@
-<html lang="en" ng-app="soundtime">
+<html lang="en" ng-app="soundtime">    <link rel="stylesheet" href="../node_modules/bulma-modal-fx/dist/css/modal-fx.min.css"/>
+    <script type="text/javascript" src="../node_modules/bulma-modal-fx/dist/js/modal-fx.min.js"></script>
     <head>
+        <base href="/">
         <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title ng-bind-template="{{viewTitle ? viewTitle + ' - ' : Soundtime}}Soundtime"></title>
     </head>
 
     <body class="has-navbar-fixed-top">
-        <div>
+        <div class="">
             <navbar></navbar>
 
-            <div ng-view class="is-unselectable"></div>
+            <div ng-view class="hero is-fullheight-with-navbar is-unselectable"></div>
         </div>
 	</body>
 
-    <link rel = "stylesheet" href = "https://cdn.materialdesignicons.com/2.1.19/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="https://cdn.materialdesignicons.com/2.1.19/css/materialdesignicons.min.css">
 
-    <link rel="stylesheet" href="../node_modules/bulma-modal-fx/dist/css/modal-fx.min.css"/>
-    
     <link href="https://fonts.googleapis.com/css?family=Lexend+Deca&display=swap" rel="stylesheet">
     
-    <script type="text/javascript" src="../node_modules/bulma-modal-fx/dist/js/modal-fx.min.js"></script>
+    <!-- <link rel="stylesheet" href="../node_modules/bulma-modal-fx/dist/css/modal-fx.min.css"/>
+    <script type="text/javascript" src="../node_modules/bulma-modal-fx/dist/js/modal-fx.min.js"></script> -->
     
-    <!-- <link rel="stylesheet" href="https://unpkg.com/bulma-modal-fx/dist/css/modal-fx.min.css">
-    <script type="text/javascript" src="https://unpkg.com/bulma-modal-fx/dist/js/modal-fx.min.js"/> -->
+    <link rel="stylesheet" href="https://unpkg.com/bulma-modal-fx/dist/css/modal-fx.min.css">
+    <script type="text/javascript" src="https://unpkg.com/bulma-modal-fx/dist/js/modal-fx.min.js"/>
     
 </html>
 

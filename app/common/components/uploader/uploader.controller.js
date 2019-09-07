@@ -1,23 +1,26 @@
-//import * as id3 from 'id3js';
-
 /* @ngInject */
 class UploaderController {
-    constructor($scope, uploadService) {
+    constructor($scope, uploadService, websiteNameConstant) {
         this.$scope = $scope;
         this.uploadService = uploadService;
+        this.websiteName = websiteNameConstant;
 
-        this.$scope.files = [];
+        this.$scope.files = this.uploadService.filesList;
 
         console.log(this.$scope.files);
 
         this.$scope.fileSelectionHandler = 
-            (files) => {
-                for (var i = 0; i < files.length; i++) {
-                    files[i].isUploading = false;
-                    files[i].isUploaded = false;
-                    this.$scope.files.push(files[i]);
+            (newFiles) => {
+                for (var i = 0; i < newFiles.length; i++) {
+                    newFiles[i].isUploading = false;
+                    newFiles[i].isUploaded = false;
+                    this.$scope.files.push(newFiles[i]);
                 }
             };
+    }
+
+    clearCompleted() {
+        this.uploadService.clearCompleted();
     }
 
     removeFile(index) {
@@ -25,18 +28,17 @@ class UploaderController {
     }
 
     uploadFile(index) {
-        // TODO: clean this up
-        this.$scope.files[index].isUploading = !this.$scope.files[index].isUploading;
         this.uploadService.uploadFile(this.$scope.files[index]);
     }
 
     getLink(index) {
         // THIS ONLY WORKS OVER HTTPS
         // TODO:                make this stuff here VVV a real link
-        navigator.clipboard.writeText(this.$scope.files[index].fileId).then(
+        const url = `${this.websiteName}/t/${this.$scope.files[index].fileId}`;
+        navigator.clipboard.writeText(url).then(
             // On success
             (x) => {
-                console.log("Copied to clipboard");
+                console.log("URL copied to clipboard");
             },
             // On error
             (x) => {
@@ -47,4 +49,4 @@ class UploaderController {
     }
 }
 
-export default UploaderController ;
+export default UploaderController;

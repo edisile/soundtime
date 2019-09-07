@@ -3,6 +3,7 @@ class UploadService {
 	constructor($http, apiUrlBuilderService) {
 		this.$http = $http;
 		this.apiService = apiUrlBuilderService;
+		this.filesList = [];
 	}
 
 	uploadFile(file) {
@@ -13,6 +14,8 @@ class UploadService {
 					type: file.type
 				}
 		);
+
+		file.isUploading = true;
 		
 		this.$http.get(requestUrl).then(
 				// On success
@@ -44,6 +47,15 @@ class UploadService {
 					
 				}
 		);
+	}
+
+	clearCompleted() {
+		for(let i = 0; i < this.filesList.length; i++) { 
+			if ( this.filesList[i].isUploaded ) {
+				this.filesList.splice(i, 1); 
+				i--;
+			}
+		}
 	}
 }
 

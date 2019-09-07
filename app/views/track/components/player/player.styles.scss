@@ -1,7 +1,7 @@
 .music-player {
     display: block;
     position: relative;
-    width: 400px;
+    width: 360px;
     margin: auto;
     border-radius: 10px 10px 10px 10px;
     background: transparent linear-gradient(to bottom, #00000000 50%, #3273dc 400px);
@@ -11,8 +11,8 @@
 
 .cover {
     float: left; /* ??? */
-    width: 400px;
-    height: 400px;
+    width: 360px;
+    height: 360px;
 }
 
 .cover img {
@@ -23,23 +23,6 @@
     text-align: center;
     z-index: -1;
     border-radius: 10px 10px 0px 0px;
-}
-
-.track-info {
-    position: relative;
-    top: -54px;
-    left: 36px;
-    width: fit-content;
-}
-
-#track-title {
-    font-size: 36px;
-    font-weight: bold;
-}
-
-#track-artist {
-    font-size: 18px;
-    margin-top: -6px;
 }
 
 .player-controls {
