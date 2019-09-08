@@ -1,18 +1,23 @@
+.music-player-container {
+    margin: auto;
+    width: 100%;
+    max-width: 400px;
+}
+
 .music-player {
     display: block;
     position: relative;
-    width: 360px;
+    width: 100%;
+    padding-top: 100%;
     margin: auto;
     border-radius: 10px 10px 10px 10px;
-    background: transparent linear-gradient(to bottom, #00000000 50%, #3273dc 400px);
     box-shadow: 0px 5px 10px 0px #00000055;
     transition:.2s;
 }
 
 .cover {
     float: left; /* ??? */
-    width: 360px;
-    height: 360px;
+    margin-top: -100%;
 }
 
 .cover img {
@@ -58,6 +63,7 @@
     bottom: -18px;
     box-shadow: 0px 7px 14px 0px #00000044;
     transition:.2s;
+    filter: brightness(120%);
 }
 
 #seek-bar {
@@ -70,7 +76,7 @@
 }
 
 #seek-bar:hover {
-    filter: brightness(110%);
+    filter: brightness(120%);
     transition:.25s;
 }
 

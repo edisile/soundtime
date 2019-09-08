@@ -1,3 +1,4 @@
+import errorViewTemplate from './views/error/error.template.html';
 import trackViewTemplate from './views/track/track.template.html';
 import trackViewController from './views/track/track.controller';
 import homeViewTemplate from './views/home/home.template.html';
@@ -16,8 +17,11 @@ export default ($routeProvider, $locationProvider) => {
             controller: trackViewController,
             controllerAs: '$ctrl'
         })
+        .when('/404', {
+            template: errorViewTemplate
+        })
         .otherwise({
-            redirectTo: '/'
+            redirectTo: '/404'
         });
 
 

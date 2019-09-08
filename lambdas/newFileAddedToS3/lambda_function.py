@@ -1,5 +1,5 @@
 from base64 import b64encode
-from datetime import datetime
+from time import time
 from io import BytesIO
 from tinytag import TinyTag as tt
 import boto3
@@ -25,9 +25,6 @@ TYPES = {
 def lambda_handler(event, context):
     s3Bucket = event["Records"][0]["s3"]["bucket"]["name"]
     s3ObjectKey = event["Records"][0]["s3"]["object"]["key"]
-    s3ObjectSize = event["Records"][0]["s3"]["object"]["size"]
-    
-    print(s3ObjectKey, s3ObjectSize)
     
     db = boto3.client("dynamodb")
     s3 = boto3.client("s3")
@@ -68,31 +65,24 @@ def lambda_handler(event, context):
         else: 
             b64ImgStr = ""
 
+        ttl = int(time()) + (14*24*60*60) # 14 days in seconds
+
         attrUpdates = {
-                "lastAccess": {
-                    "Value": {"S": datetime.isoformat(datetime.now())}
+                "ttl": {
+                    "Value": {"N": "%d" % ttl}
                 },
                 "image": {
                     "Value": {"S": b64ImgStr}
                 }
             }
 
-        # Get title, artist and album maybe, then add them to dynamodb
+        # Get title, artist and album if available, then add them to dynamodb
         tags = tt.get(tmpFile).as_dict();
         for key in ["title", "artist", "album"]:
             if tags[key]:
                 attrUpdates[key] = {
                     "Value": {"S": tags[key]}
                 }
-
-        process.wait()
-
-        if process.returncode != 0:
-            raise Exception("ffmpeg returned with code %d" % p.returncode)
-
-        pushToS3(s3Bucket, s3ObjectKey, s3)
-
-
 
         response = db.update_item(
             TableName = "soundtime-data",
@@ -101,6 +91,13 @@ def lambda_handler(event, context):
             },
             AttributeUpdates = attrUpdates
         )
+
+        process.wait()
+
+        if process.returncode != 0:
+            raise Exception("ffmpeg returned with code %d" % p.returncode)
+
+        pushToS3(s3Bucket, s3ObjectKey, s3)
 
         return
 

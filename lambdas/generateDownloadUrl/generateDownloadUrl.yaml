@@ -1,0 +1,20 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: Generates a presigned URL to download the original file
+Resources:
+  generateDownloadUrl:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: lambda_function.lambda_handler
+      Runtime: python3.7
+      CodeUri: .
+      Description: Generates a presigned URL to download the original file
+      MemorySize: 128
+      Timeout: 3
+      Role: 'arn:aws:iam::670324316752:role/s3-download-dynamoDB-get-query'
+      Events:
+        Api1:
+          Type: Api
+          Properties:
+            Path: /getdownloadurl
+            Method: GET

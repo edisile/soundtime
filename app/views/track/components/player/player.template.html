@@ -1,37 +1,38 @@
-<div class="music-player" style="background: transparent linear-gradient(to bottom,#00000000 50%,{{colors.primary}} 360px);">
-    <div class="cover">
-        <div ng-if="$ctrl.tags == undefined" class="cover spinner is-very-large"></div>
-        <img color-watch ng-if="$ctrl.tags.image" src="{{$ctrl.tags.image}}" alt="">
-        <img ng-if="!$ctrl.tags.image" src="./assets/img/file_placeholder.svg" alt="">
-    </div>
-
-    <div class="player-controls">
-        <div class="play-pause-button" ng-click="$ctrl.playPause()" style="background-color: {{colors.accent}}">
-            <!-- Play button -->
-            <svg class="play-icon" ng-if="!$ctrl.isPlaying" viewBox="0 0 12.7 12.7" height="48" width="48">
-                <g transform="translate(0,-284.29999)">
-                    <path style="fill: {{colors.accText}};" d="m 4.3125,288.26367 v 4.77149 c 0,0.40408 0.4372272,0.65721 0.7871094,0.45507 1.3771768,-0.79567 2.7547297,-1.59067 4.1328125,-2.38476 0.3508606,-0.20217 0.350677,-0.70767 0,-0.91016 C 7.8550563,289.39997 6.477022,288.6058 5.0996094,287.81055 4.7406164,287.60329 4.3125,287.87136 4.3125,288.26367 Z"/>
-                </g>
-            </svg>
-
-            <!-- Pause button -->
-            <svg class="play-icon" ng-if="$ctrl.isPlaying" viewBox="0 0 12.7 12.7" height="48" width="48">
-                <path style="fill: {{colors.accText}};" d="M 15.863281 13.494141 C 14.836442 13.494141 14.003906 14.326677 14.003906 15.353516 L 14.003906 33.632812 C 14.003906 34.659652 14.836442 35.492188 15.863281 35.492188 L 20.138672 35.492188 C 21.165511 35.492188 21.998047 34.659652 21.998047 33.632812 L 21.998047 15.353516 C 21.998047 14.326677 21.165511 13.494141 20.138672 13.494141 L 15.863281 13.494141 z M 27.859375 13.494141 C 26.832536 13.494141 25.998047 14.326677 25.998047 15.353516 L 25.998047 33.632812 C 25.998047 34.659652 26.832536 35.492188 27.859375 35.492188 L 32.140625 35.492188 C 33.167464 35.492188 34.001953 34.659652 34.001953 33.632812 L 34.001953 15.353516 C 34.001953 14.326677 33.167464 13.494141 32.140625 13.494141 L 27.859375 13.494141 z " transform="scale(0.26458333)"/>
-            </svg>
+<div class="music-player-container">
+    <div class="music-player" style="background: transparent linear-gradient(to bottom,#00000000 50%,{{colors.primary}} 100%);">
+        <div class="cover">
+            <img color-watch ng-if="$ctrl.tags.image" ng-attr-src="{{$ctrl.tags.image}}" alt="">
+            <img ng-if="!$ctrl.tags.image" src="./assets/img/file_placeholder.svg" alt="">
         </div>
 
-        <span id="time">
-            <b id="current-time" ng-bind="currentTime | secondsToTimeFilter" style="color: {{colors.primText}}"></b>
+        <div class="player-controls">
+            <div class="play-pause-button" ng-click="$ctrl.playPause()" style="background-color: {{colors.accent}}">
+                <!-- Play button -->
+                <svg class="play-icon" ng-if="!$ctrl.isPlaying" viewBox="0 0 12.7 12.7" height="48" width="48">
+                    <g transform="translate(0,-284.29999)">
+                        <path style="fill: {{colors.accText}};" d="m 4.3125,288.26367 v 4.77149 c 0,0.40408 0.4372272,0.65721 0.7871094,0.45507 1.3771768,-0.79567 2.7547297,-1.59067 4.1328125,-2.38476 0.3508606,-0.20217 0.350677,-0.70767 0,-0.91016 C 7.8550563,289.39997 6.477022,288.6058 5.0996094,287.81055 4.7406164,287.60329 4.3125,287.87136 4.3125,288.26367 Z"/>
+                    </g>
+                </svg>
 
-            <b id="duration-time" ng-click="$ctrl.showRemainingTime = !$ctrl.showRemainingTime" ng-bind="($ctrl.showRemainingTime ? currentTime - duration : duration) | secondsToTimeFilter" style="color: {{colors.primText}}"></b>
-        </span>
+                <!-- Pause button -->
+                <svg class="play-icon" ng-if="$ctrl.isPlaying" viewBox="0 0 12.7 12.7" height="48" width="48">
+                    <path style="fill: {{colors.accText}};" d="M 15.863281 13.494141 C 14.836442 13.494141 14.003906 14.326677 14.003906 15.353516 L 14.003906 33.632812 C 14.003906 34.659652 14.836442 35.492188 15.863281 35.492188 L 20.138672 35.492188 C 21.165511 35.492188 21.998047 34.659652 21.998047 33.632812 L 21.998047 15.353516 C 21.998047 14.326677 21.165511 13.494141 20.138672 13.494141 L 15.863281 13.494141 z M 27.859375 13.494141 C 26.832536 13.494141 25.998047 14.326677 25.998047 15.353516 L 25.998047 33.632812 C 25.998047 34.659652 26.832536 35.492188 27.859375 35.492188 L 32.140625 35.492188 C 33.167464 35.492188 34.001953 34.659652 34.001953 33.632812 L 34.001953 15.353516 C 34.001953 14.326677 33.167464 13.494141 32.140625 13.494141 L 27.859375 13.494141 z " transform="scale(0.26458333)"/>
+                </svg>
+            </div>
 
-        <audio>
-            <source ng-if="$ctrl.previewSource" src="{{$ctrl.previewSource}}" type="audio/ogg"/>
-        </audio>
+            <span id="time">
+                <b id="current-time" ng-bind="currentTime | secondsToTimeFilter" style="color: {{colors.primText}}"></b>
 
-        <div id="seek-bar" ng-click="$ctrl.seek($event)" style="background-color: {{colors.accent}}44">
-            <span id="seek-value" style="background-color: {{colors.accent}}; width: {{$ctrl.seekValue * 100}}%;"></span>
+                <b id="duration-time" ng-click="$ctrl.showRemainingTime = !$ctrl.showRemainingTime" ng-bind="($ctrl.showRemainingTime ? currentTime - duration : duration) | secondsToTimeFilter" style="color: {{colors.primText}}"></b>
+            </span>
+
+            <audio>
+                <source ng-if="$ctrl.previewSource" ng-attr-src="{{$ctrl.previewSource}}" type="audio/ogg"/>
+            </audio>
+
+            <div id="seek-bar" ng-click="$ctrl.seek($event)" style="background-color: {{colors.accent}}44">
+                <span id="seek-value" style="background-color: {{colors.accent}}; width: {{$ctrl.seekValue * 100}}%;"></span>
+            </div>
         </div>
     </div>
 </div>

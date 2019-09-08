@@ -1,0 +1,68 @@
+import uuid
+import boto3
+from datetime import datetime
+from nanoid import generate
+from time import time
+from urllib.parse import unquote
+
+"""
+    Generate a presigned URL for a PUT request to S3
+    It is expected that event has the following structure:
+        {
+            "filename": string,
+            "size": int,
+            "type": string
+        }
+"""
+
+def lambda_handler(event, context):
+    # Get a S3 service client
+    s3 = boto3.client("s3")
+    # Get a DynamoDB service client as well
+    db = boto3.client("dynamodb")
+    
+    # Generate a random file id to retrieve the file
+    fileId = generate("0123456789abcdefghijklmnopqrstuvwxyz" \
+                        "ABCDEFGHIJKLMNOPQRSTUVWXYZ", size=6)
+    # Generate a random file id to save the file in the S3 bucket
+    s3ObjectKey = uuid.uuid4().hex
+    
+    try:
+        fileSize = int(event["size"]) # Raises ValueError on bad request
+        
+        # 10 minutes from now the db entry will be deleted unless updated with 
+        # a longer TTL; 10 minutes are more than enough to upload and process 
+        # a file
+        ttl = int(time()) + 600
+        
+        # Add an entry to the DB table
+        response = db.put_item(
+            TableName = "soundtime-data",
+            Item = {
+                "fileId": {"S": fileId},
+                "s3Key": {"S": s3ObjectKey},
+                "filename": {"S": unquote(event["filename"])},
+                "size": {"N": str(fileSize)},
+                "ttl": {"N": "%d" % ttl},
+                "timestamp": {"S": datetime.isoformat(datetime.now())},
+                "type": {"S": event["type"]}
+            })
+    
+        # Generate the presigned URL for put requests
+        presigned_url = s3.generate_presigned_url(
+            ClientMethod = "put_object",
+            Params = {
+                "Bucket": "soundtime-data",
+                "Key": s3ObjectKey,
+                "ContentLength": fileSize
+            }, # ^^^ file size, content type and md5 checksum can be used up here 
+            ExpiresIn = 600 # The link is valid for 600 s = 10 min
+        )
+    
+        # Return the presigned URL and fileId as the response to the API request
+        return {
+            "id": fileId, # This will be used to retrieve the file
+            "url": presigned_url
+        }
+    except ValueError:
+        raise Exception("<400> Bad request, file size was not a number")

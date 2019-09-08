@@ -1,0 +1,28 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: >-
+  Generate a lower quality preview for the uploaded file; it takes about 5 s /
+  song, so this should be free for ~40k songs each month
+Resources:
+  newFileAddedToS3:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: lambda_function.lambda_handler
+      Runtime: python3.7
+      CodeUri: .
+      Description: >-
+        Generate a lower quality preview for the uploaded file; it takes about 5
+        s / song, so this should be free for ~40k songs each month
+      MemorySize: 2048
+      Timeout: 30
+      Role: 'arn:aws:iam::670324316752:role/dynamoDB-get-update'
+      Events:
+        BucketEvent1:
+          Type: S3
+          Properties:
+            Bucket:
+              Ref: Bucket1
+            Events:
+              - 's3:ObjectCreated:Put'
+  Bucket1:
+    Type: 'AWS::S3::Bucket'

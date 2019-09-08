@@ -32,7 +32,7 @@ class TrackController {
                 // On success
                 (response) => {
                     // Download
-                    window.open(response.data.url,"","");
+                    window.open(response.data.url, "_self");
                     // ^ Horrendous workaround, ugly to see
                     this.$scope.waitingForDownload = false;
                     this.$scope.downloadStarted = true;
