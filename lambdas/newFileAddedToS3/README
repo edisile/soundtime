@@ -1,0 +1,19 @@
+Make sure to replace the "ffmpeg" file in this directory with a real static 
+build of FFmpeg supporting vorbis. Such a build can be made from the source 
+code available at 
+
+					https://source.ffmpeg.org/ffmpeg 
+
+or retrieved form a reputable source such as 
+
+					https://johnvansickle.com/ffmpeg
+					
+that makes available unofficial static builds in both stable and git-master 
+flavours. Once placed in this directory the lambda function will be ready to be 
+deployed.
+
+Another dependency of this function is the TinyTag library used for parsing the 
+metadata of the music files uploaded to the S3 bucket; to get this dependency 
+just execute the following command:
+					
+					pip install tinytag --target=./

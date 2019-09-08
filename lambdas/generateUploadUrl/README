@@ -1,0 +1,4 @@
+This Lambda needs the NanoID library to function correctly; before uploading to 
+AWS Lambda make sure to execute in this directory the following command:
+
+					pip install nanoid --target=./
