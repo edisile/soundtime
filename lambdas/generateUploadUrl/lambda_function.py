@@ -1,5 +1,6 @@
 import uuid
 import boto3
+import os
 from datetime import datetime
 from nanoid import generate
 from time import time
@@ -15,11 +16,12 @@ from urllib.parse import unquote
         }
 """
 
+s3 = boto3.client("s3")
+db = boto3.client("dynamodb")
+BUCKET = os.environ["s3Bucket"]
+TABLE = os.environ["dbTable"]
+
 def lambda_handler(event, context):
-    # Get a S3 service client
-    s3 = boto3.client("s3")
-    # Get a DynamoDB service client as well
-    db = boto3.client("dynamodb")
     
     # Generate a random file id to retrieve the file
     fileId = generate("0123456789abcdefghijklmnopqrstuvwxyz" \
@@ -37,7 +39,7 @@ def lambda_handler(event, context):
         
         # Add an entry to the DB table
         response = db.put_item(
-            TableName = "soundtime-data",
+            TableName = TABLE,
             Item = {
                 "fileId": {"S": fileId},
                 "s3Key": {"S": s3ObjectKey},
@@ -52,10 +54,10 @@ def lambda_handler(event, context):
         presigned_url = s3.generate_presigned_url(
             ClientMethod = "put_object",
             Params = {
-                "Bucket": "soundtime-data",
+                "Bucket": BUCKET,
                 "Key": s3ObjectKey,
                 "ContentLength": fileSize
-            }, # ^^^ file size, content type and md5 checksum can be used up here 
+            }, 
             ExpiresIn = 600 # The link is valid for 600 s = 10 min
         )
     

@@ -44,12 +44,19 @@ module.exports = (env) => {
                 {
                 	// This handles svg resorces in the bundling process
                     test: /\.svg$/,
-                    loader: 'svg-inline-loader'
+                    loader: 'file-loader'
                 },
                 {
                 	// This loads and inlines the .html templates for components
                     test: /\.html$/,
-                    use: ['raw-loader']
+                    use: [
+                        {
+                            loader: 'html-loader', 
+                            options: { 
+                                minimize: isProduction
+                            }
+                        }
+                    ]
                 }
             ]
         },
@@ -61,11 +68,12 @@ module.exports = (env) => {
                 }
             ]),
             new HtmlWebpackPlugin(
-	            {	
+	            {
 	            	inject: 'head', // Add the script tag into the <head>
 	                filename: 'index.html', // Name of the exported file in the output dir
 	                template: "./app/index.html", // Path to the template
-	                favicon: "assets/favicon.png"
+	                favicon: "assets/favicon.png",
+                    minify: isProduction // Minify HTML when in production mode
 	            }
             )
         ],

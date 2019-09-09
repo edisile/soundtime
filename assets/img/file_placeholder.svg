@@ -5,67 +5,43 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   id="svg8"
-   version="1.1"
-   viewBox="0 0 132.29166 132.29167"
-   height="500"
    width="500"
-   sodipodi:docname="file_placeholder.svg"
-   inkscape:version="0.92.4 5da689c313, 2019-01-14">
-  <sodipodi:namedview
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1"
-     objecttolerance="10"
-     gridtolerance="10"
-     guidetolerance="10"
-     inkscape:pageopacity="0"
-     inkscape:pageshadow="2"
-     inkscape:window-width="1440"
-     inkscape:window-height="834"
-     id="namedview17"
-     showgrid="false"
-     inkscape:zoom="0.944"
-     inkscape:cx="148.14874"
-     inkscape:cy="235.69319"
-     inkscape:window-x="0"
-     inkscape:window-y="0"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="svg8" />
+   height="500"
+   viewBox="0 0 132.29166 132.29167"
+   version="1.1"
+   id="svg9">
   <defs
      id="defs2">
     <filter
-       id="filter1277"
-       style="color-interpolation-filters:sRGB;">
+       style="color-interpolation-filters:sRGB;"
+       id="filter1277">
       <feFlood
-         id="feFlood1267"
-         result="flood"
+         flood-opacity="0.133333"
          flood-color="rgb(0,0,0)"
-         flood-opacity="0.133333" />
+         result="flood"
+         id="feFlood1267" />
       <feComposite
-         id="feComposite1269"
-         result="composite1"
-         operator="in"
+         in="flood"
          in2="SourceGraphic"
-         in="flood" />
+         operator="in"
+         result="composite1"
+         id="feComposite1269" />
       <feGaussianBlur
-         id="feGaussianBlur1271"
-         result="blur"
+         in="composite1"
          stdDeviation="1"
-         in="composite1" />
+         result="blur"
+         id="feGaussianBlur1271" />
       <feOffset
-         id="feOffset1273"
-         result="offset"
+         dx="0"
          dy="1"
-         dx="0" />
+         result="offset"
+         id="feOffset1273" />
       <feComposite
-         id="feComposite1275"
-         result="composite2"
-         operator="over"
+         in="SourceGraphic"
          in2="offset"
-         in="SourceGraphic" />
+         operator="over"
+         result="composite2"
+         id="feComposite1275" />
     </filter>
   </defs>
   <metadata
@@ -76,27 +52,27 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
-  <g
-     transform="translate(0,-164.70831)"
-     id="layer1">
-    <rect
-       y="164.70831"
-       x="-3.376465e-06"
-       height="132.29167"
-       width="132.29167"
-       id="rect812"
-       style="opacity:1;fill:#fafafa;fill-opacity:1;stroke:none;stroke-width:1.05833328;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal" />
-    <path
-       style="fill:#ebebeb;fill-opacity:1;stroke-width:3.21280122"
-       d="M 72.571433,197.66783 H 46.869019 a 6.4256025,6.4256025 0 0 0 -6.425595,6.42552 v 51.4049 a 6.4256025,6.4256025 0 0 0 6.425595,6.42552 h 38.553615 a 6.4256025,6.4256025 0 0 0 6.425607,-6.42552 V 216.94464 L 72.571433,197.66783"
-       id="path831" />
-    <path
-       id="path829"
-       d="M 72.571433,198.72617 H 46.869019 a 6.4256025,6.4256025 0 0 0 -6.425595,6.42552 v 51.4049 a 6.4256025,6.4256025 0 0 0 6.425595,6.42552 h 38.553615 a 6.4256025,6.4256025 0 0 0 6.425607,-6.42552 V 218.00298 L 72.571433,198.72617"
-       style="stroke-width:3.21280122;fill:#e1e1e1;fill-opacity:1;filter:url(#filter1277)" />
-  </g>
+  <rect
+     y="2.9882813e-06"
+     x="-3.376465e-06"
+     height="132.29167"
+     width="132.29167"
+     id="rect812"
+     style="opacity:1;fill:#fafafa;fill-opacity:1;stroke:none;stroke-width:1.05833328;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal" />
+  <path
+     style="fill:#f1f1f1;fill-opacity:1;stroke-width:3.21280122"
+     d="M 72.571433,32.95952 H 46.869019 a 6.4256025,6.4256025 0 0 0 -6.425595,6.42552 v 51.4049 a 6.4256025,6.4256025 0 0 0 6.425595,6.42552 h 38.553615 a 6.4256025,6.4256025 0 0 0 6.425607,-6.42552 V 52.23633 L 72.571433,32.95952"
+     id="path831" />
+  <path
+     id="path829"
+     d="M 72.571433,34.01786 H 46.869019 a 6.4256025,6.4256025 0 0 0 -6.425595,6.42552 v 51.4049 a 6.4256025,6.4256025 0 0 0 6.425595,6.42552 h 38.553615 a 6.4256025,6.4256025 0 0 0 6.425607,-6.42552 V 53.29467 L 72.571433,34.01786"
+     style="fill:#e1e1e1;fill-opacity:1;stroke-width:3.21280122;filter:url(#filter1277)" />
+  <path
+     id="path837"
+     d="m 75.07936,64.30678 h -5.955687 v 14.889218 a 5.9556853,5.9556853 0 0 1 -5.955689,5.955677 5.9556853,5.9556853 0 0 1 -5.955678,-5.955677 5.9556853,5.9556853 0 0 1 5.955678,-5.955689 c 1.191144,0 2.084497,0.297802 2.977849,0.893409 V 58.351147 h 8.933527 v 5.955689"
+     style="stroke-width:2.97784257;fill:#333333" />
 </svg>

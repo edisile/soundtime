@@ -18,3 +18,7 @@ Resources:
           Properties:
             Path: /gettrackinfo
             Method: GET
+      Environment:
+        Variables:
+          dbTable: soundtime-data
+          s3Bucket: soundtime-data

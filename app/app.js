@@ -1,11 +1,12 @@
 // Angular
-import angular from 'angular';
+// import angular from 'angular';
+// 	// In-app routing
+// import ngRoute from 'angular-route';
 
 // Libraries
-	// In-app routing
-import ngRoute from 'angular-route';
 	// Drag and drop file upload
 import angularUploads from '../node_modules/angular-uploads/dist/angular-uploads.min.js';
+	// Page title manipulation
 import angularViewhead from '../node_modules/angularjs-viewhead/angularjs-viewhead.js';
 
 // Modules
@@ -18,7 +19,7 @@ import trackModule from './views/track/track.module';
 import router from './router';
 
 // Styles
-import mainStyle from '../assets/styles/main.scss';
+import mainStyle from './index.scss';
 
 const required = [
 	'app.common',

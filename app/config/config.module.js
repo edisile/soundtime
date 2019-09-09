@@ -1,4 +1,3 @@
-import angular from 'angular';
 import apiConstants from './api.constant';
 import websiteNameConstant from './websiteName.constant';
 

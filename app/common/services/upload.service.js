@@ -20,14 +20,14 @@ class UploadService {
 		this.$http.get(requestUrl).then(
 				// On success
 				(response) => {
-					console.log(response.data);
+					// console.log(response.data);
 
 					file.fileId = response.data.id;
 
 					this.$http.put(response.data.url, file).then(
 						// On success
 						(uploadResponse) => {
-							console.log(uploadResponse);
+							// console.log(uploadResponse);
 							file.isUploading = false;
 							file.isUploaded = true;
 						},

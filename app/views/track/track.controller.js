@@ -1,7 +1,6 @@
 /* @ngInject */
 class TrackController {
-    constructor($http, $scope, $routeParams, trackInfoService, colorService) {
-        colorService.reset()
+    constructor($http, $scope, $routeParams, trackInfoService) {
         this.$http = $http;
         this.$scope = $scope;
         this.id = $routeParams.trackId;
@@ -12,8 +11,6 @@ class TrackController {
 
         this.trackInfoService.getInfo($routeParams.trackId);
 
-        //this.colorService = colorService;
-
         this.$scope.playing = false;
         
         this.$scope.waitingForDownload = false;
@@ -22,7 +19,7 @@ class TrackController {
     }
 
     downloadTrack() {
-        console.log("Requesting link")
+        // console.log("Requesting link")
         this.$scope.waitingForDownload = true;
         this.$scope.downloadStarted = false;
         this.$scope.errorDuringRequest = false;
@@ -33,7 +30,7 @@ class TrackController {
                 (response) => {
                     // Download
                     window.open(response.data.url, "_self");
-                    // ^ Horrendous workaround, ugly to see
+                    // ^ Horrendous workaround, ugly af
                     this.$scope.waitingForDownload = false;
                     this.$scope.downloadStarted = true;
                 },

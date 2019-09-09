@@ -1,18 +1,21 @@
 import boto3
+import os
 from time import time
 
 """
     Return the info of a file from the DynamoDB table.
 """
 
+db = boto3.client("dynamodb")
+s3 = boto3.client("s3")
+BUCKET = os.environ["s3Bucket"]
+TABLE = os.environ["dbTable"]
+
 def lambda_handler(event, context):
-    
-    db = boto3.client("dynamodb")
-    s3 = boto3.client("s3")
-    
+
     try:
         dbResponse = db.get_item(
-            TableName = "soundtime-data",
+            TableName = TABLE,
             Key = {
                 "fileId": { "S": event["fileId"] }
             }
@@ -32,7 +35,7 @@ def lambda_handler(event, context):
         previewLink = s3.generate_presigned_url(
             ClientMethod = "get_object",
             Params = {
-                "Bucket": "soundtime-data",
+                "Bucket": BUCKET,
                 "Key": "previews/" + dbResponse["Item"]["s3Key"]["S"],
                 "ResponseContentType": "audio/ogg",
             },
@@ -48,7 +51,7 @@ def lambda_handler(event, context):
         # a day or more
         if (newTtl - currentTtl) >= 24*60*60:
             response = db.update_item(
-                TableName = "soundtime-data",
+                TableName = TABLE,
                 Key = {
                     "fileId": {"S": event["fileId"]},
                 },
@@ -67,5 +70,6 @@ def lambda_handler(event, context):
             "preview": previewLink,
             "tags": tags
         }
+        
     except KeyError as e:
         raise Exception("<404> This file does not exist")

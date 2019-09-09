@@ -11,7 +11,9 @@ FFMPEG_STATIC = "/var/task/ffmpeg"
 TYPES = {
     "audio/mp3": ".mp3",
     "audio/ogg": ".ogg",
+    "audio/opus": ".opus",
     "audio/flac": ".flac",
+    "audio/mp4": ".mp4",
     "audio/x-m4a": ".m4a",
     "audio/wav": ".wav"
 }
@@ -22,15 +24,17 @@ TYPES = {
     file, otherwise it will be removed at the next scheduled cleanup job.
 """
 
+db = boto3.client("dynamodb")
+s3 = boto3.client("s3")
+BUCKET = os.environ["s3Bucket"]
+TABLE = os.environ["dbTable"]
+
 def lambda_handler(event, context):
     s3Bucket = event["Records"][0]["s3"]["bucket"]["name"]
     s3ObjectKey = event["Records"][0]["s3"]["object"]["key"]
     
-    db = boto3.client("dynamodb")
-    s3 = boto3.client("s3")
-    
     response = db.query(
-        TableName = "soundtime-data",
+        TableName = TABLE,
         IndexName = "s3Key-index",
         KeyConditionExpression = "s3Key = :key",
         ExpressionAttributeValues = {
@@ -39,7 +43,6 @@ def lambda_handler(event, context):
     )
     
     try:
-        # Let"s update the DB entry to "enable" it
         fileId = response["Items"][0]["fileId"]["S"]
         fileType = response["Items"][0]["type"]["S"]
 
@@ -55,6 +58,8 @@ def lambda_handler(event, context):
         with open(tmpFile, "wb") as f:
             f.write(audioData.read())
 
+        # Fork a process for the audio conversion task, meanwhile let's do 
+        # other stuff  
         process = convertAudio(tmpFile)
 
         if extractCover(tmpFile) == 0:
@@ -65,8 +70,8 @@ def lambda_handler(event, context):
         else: 
             b64ImgStr = ""
 
+        # The TTL of the file is gonna be 14 days from now
         ttl = int(time()) + (14*24*60*60) # 14 days in seconds
-
         attrUpdates = {
                 "ttl": {
                     "Value": {"N": "%d" % ttl}
@@ -76,7 +81,7 @@ def lambda_handler(event, context):
                 }
             }
 
-        # Get title, artist and album if available, then add them to dynamodb
+        # Get tags if available, then add them to the dynamoDB attributes update
         tags = tt.get(tmpFile).as_dict();
         for key in ["title", "artist", "album"]:
             if tags[key]:
@@ -85,7 +90,7 @@ def lambda_handler(event, context):
                 }
 
         response = db.update_item(
-            TableName = "soundtime-data",
+            TableName = TABLE,
             Key = {
                 "fileId": {"S": fileId},
             },

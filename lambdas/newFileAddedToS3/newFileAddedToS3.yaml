@@ -24,5 +24,9 @@ Resources:
               Ref: Bucket1
             Events:
               - 's3:ObjectCreated:Put'
+      Environment:
+        Variables:
+          s3Bucket: soundtime-data
+          dbTable: soundtime-data
   Bucket1:
     Type: 'AWS::S3::Bucket'

@@ -18,3 +18,7 @@ Resources:
           Properties:
             Path: /getuploadurl
             Method: GET
+      Environment:
+        Variables:
+          dbTable: soundtime-data
+          s3Bucket: soundtime-data

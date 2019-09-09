@@ -1,36 +1,56 @@
-<nav class="navbar is-fixed-top has-shadow is-unselectable">
+<nav class="navbar is-spaced is-fixed-top has-shadow is-unselectable">
 	<div class="container">
 		<div class="navbar-brand">
-			<a class="navbar-item logo" href="/#!/">
-				<img src="./assets/img/logo.svg" alt="soundti.me">
+			<a class="navbar-item logo" href="/" ng-click="trackId = ''">
+				<img src="/assets/img/logo.svg" alt="soundti.me">
 			</a>
-			
-			<a class="navbar-item is-hoverable" href="/#!/">
-				<span>Soundtime</span>
+
+			<a role="button" class="navbar-burger burger" ng-class="{'is-active': $root.navbarMenuIsActive}" ng-click="$root.navbarMenuIsActive = !$root.navbarMenuIsActive" aria-label="menu" aria-expanded="false" data-target="navbar">
+				<span aria-hidden="true"></span>
+				<span aria-hidden="true"></span>
+				<span aria-hidden="true"></span>
 			</a>
 		</div>
 
-		<div class="navbar-menu">
-			<div class="navbar-end">
+		<div id="navbar" class="navbar-menu" ng-class="{'is-active': $root.navbarMenuIsActive}">
+			<div class="navbar-start">
 				<div class="navbar-item">
-					<div class="field is-grouped">
+					<div class="field has-addons">
 						<p class="control">
-							<a class="button is-primary" ng-click="$ctrl.changeModalStatus()">
-								<span class="icon">
-									<i class="mdi mdi-24px mdi-upload"></i>
-								</span>
+							<a class="button is-static">
+								<span class="has-text-link">soundti.me/t/</span>
 							</a>
 						</p>
+
+						<div class="control is-expanded">
+							<input class="input" type="text" placeholder="Track ID" ng-class="{'is-danger': trackId.length < 6 && $ctrl.$location.$$path !== '/'}" ng-model="trackId" ng-keypress="trackId.length >= 6 ? $ctrl.submitIfEnter($event) : null">
+						</div>
+						
+						<div class="control">
+							<a class="button" disabled ng-if="trackId.length < 6">Go</a>
+							<a class="button is-link" ng-if="trackId.length >= 6" ng-click="$ctrl.goToTrackId()">Go</a>
+						</div>
 					</div>
 				</div>
+
+				<a class="navbar-item is-hoverable is-hidden-tablet" ng-click="$root.navbarMenuIsActive = false" href="/">
+					<span class="icon">
+						<i class="mdi mdi-24px mdi-home"></i>
+					</span>
+
+					<span>Home</span>
+				</a>
+			</div>
+
+			<div class="navbar-end">
+				<a class="navbar-item is-hoverable" ng-click="$root.uploadModalIsOpen = true; $root.navbarMenuIsActive = false">
+					<span class="icon">
+						<i class="mdi mdi-24px mdi-cloud-upload"></i>
+					</span>
+
+					<span>Upload files</span>
+				</a>
 			</div>
 		</div>
 	</div>
 </nav>
-
-<!-- TODO: move this somewhere else -->
-<div class="modal modal-fx-normal is-unselectable" ng-class="{'is-active': uploadModalIsOpen}">
-	<div class="modal-background" ng-click="$ctrl.changeModalStatus()"></div>
-
-	<uploader></uploader>
-</div>

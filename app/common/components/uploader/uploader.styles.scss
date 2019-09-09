@@ -1,9 +1,10 @@
-@import "~bulma/bulma";
+@import '~bulma/sass/utilities/initial-variables.sass';
+@import '~bulma/sass/utilities/derived-variables.sass';
 
 .dnd-dropzone {
     border: dashed;
     border-width: 1px;
-    border-radius: 0.5rem;
+    border-radius: 0.5em;
 
     &:hover {
         color: $link;
@@ -11,5 +12,9 @@
 }
 
 .msl-drag-over {
-    color: $link;
+    color: #000;//$link;
+}
+
+.table tbody td {
+    vertical-align: middle;
 }

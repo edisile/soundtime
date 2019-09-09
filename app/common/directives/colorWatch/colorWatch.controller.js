@@ -3,8 +3,11 @@ import tc from 'tinycolor2';
 
 /* @ngInject */
 class ColorWatchController {
-	constructor($element, colorService) {
+	constructor($element) {
 		this.element = $element[0];
+
+		this.styles = document.documentElement.style;
+
 		this.primary, this.accent, this.primaryText, this.secondaryText;
 
 		this.element.addEventListener('load',
@@ -37,15 +40,17 @@ class ColorWatchController {
 								["white", this.primary, this.primaryText, 
 									this.secondaryText]).toHexString();
 
-						colorService.changeColors(
-							{
-								primary: this.primary,
-								accent: this.accent,
-								accText: this.accentText,
-								primText: this.primaryText,
-								secText: this.secondaryText
-							}
-						);
+						// Set the new values to the CSS variables
+						this.styles.setProperty("--primary", this.primary);
+						this.styles.setProperty("--accent", this.accent);
+						this.styles.setProperty("--accentTransparent", 
+								this.accent + "65"); // 25% opacity
+						this.styles.setProperty("--accentText", 
+								this.accentText);
+						this.styles.setProperty("--primaryText", 
+								this.primaryText);
+						this.styles.setProperty("--secondaryText", 
+								this.secondaryText);
 					}
 				);
 			}

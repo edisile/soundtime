@@ -1,0 +1,79 @@
+@charset "utf-8";
+
+$footer-padding: 2rem 1.5rem 2rem;
+
+// Setting font
+@import url('https://fonts.googleapis.com/css?family=Lexend+Deca&display=swap');
+$family-sans-serif: 'Lexend Deca', sans-serif;
+
+@import '~bulma/sass/utilities/_all.sass';
+@import "~bulma/sass/base/_all.sass";
+@import "~bulma/sass/elements/button.sass";
+@import "~bulma/sass/elements/container.sass";
+@import "~bulma/sass/elements/content.sass";
+@import "~bulma/sass/elements/icon.sass";
+@import "~bulma/sass/elements/table.sass";
+@import "~bulma/sass/elements/title.sass";
+@import "~bulma/sass/grid/columns.sass";
+@import "~bulma/sass/layout/_all.sass";
+
+$navbar-breakpoint: $tablet;
+@import "~bulma/sass/components/navbar.sass";
+
+$modal-content-width: 768px;
+@import "~bulma/sass/components/modal.sass";
+
+@import "~bulma/sass/form/shared.sass";
+@import "~bulma/sass/form/tools.sass";
+@import "~bulma/sass/form/input-textarea.sass";
+
+
+@import '~bulma-extensions/bulma-tooltip/src/sass/index.sass';
+
+@import url('https://cdn.materialdesignicons.com/4.3.95/css/materialdesignicons.min.css');
+
+// Custom scrollbar
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: $grey-light;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: $grey-dark;
+}
+
+
+// Loading spinner
+.spinner {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	&.is-medium {
+		font-size: 2rem;
+	}
+
+	&.is-large {
+		font-size: 4rem;
+	}
+
+	&:after {
+		animation: changeContent .8s linear infinite;
+		content: "⠋";
+	}
+
+	@keyframes changeContent {
+		10% { content: "⠙"; }
+		20% { content: "⠹"; }
+		30% { content: "⠸"; }
+		40% { content: "⠼"; }
+		50% { content: "⠴"; }
+		60% { content: "⠦"; }
+		70% { content: "⠧"; }
+		80% { content: "⠇"; }
+		90% { content: "⠏"; }
+	}
+}

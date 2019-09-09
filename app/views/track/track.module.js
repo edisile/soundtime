@@ -1,4 +1,3 @@
-import angular from 'angular';
 import trackController from './track.controller';
 import trackInfoService from './services/trackInfo.service';
 import trackStyles from './track.styles.scss';

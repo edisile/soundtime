@@ -1,19 +1,21 @@
 import boto3
+import os
 
 """
     Generate a presigned URL for a download from S3
 """
 
+db = boto3.client("dynamodb")
+s3 = boto3.client("s3")
+BUCKET = os.environ["s3Bucket"]
+TABLE = os.environ["dbTable"]
+
 def lambda_handler(event, context):
-    # Get a S3 service client
-    s3 = boto3.client("s3")
-    # Get a DynamoDB service client as well
-    db = boto3.client("dynamodb")
     
     try:
         # Add an entry to the DB table
         dbResponse = db.get_item(
-            TableName = "soundtime-data",
+            TableName = TABLE,
             Key = {
                 "fileId": { "S": event["fileId"] }
             }
@@ -23,7 +25,7 @@ def lambda_handler(event, context):
         presigned_url = s3.generate_presigned_url(
             ClientMethod = "get_object",
             Params = {
-                "Bucket": "soundtime-data",
+                "Bucket": BUCKET,
                 "Key": dbResponse["Item"]["s3Key"]["S"],
                 "ResponseContentType": dbResponse["Item"]["type"]["S"],
                 "ResponseContentDisposition": "attachment;filename=" + \

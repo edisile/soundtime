@@ -1,83 +1,96 @@
-<div class="modal-card">
-	<header class="modal-card-head">
-		<p class="modal-card-title">Upload file</p>
-	</header>
-	
-	<section class="modal-card-body">
-		<section class="uploader hero">
-			<div class="hero dnd-dropzone" msl-file-input="fileSelectionHandler" msl-dnd-folder-input="fileSelectionHandler">
-				<input type="file" multiple="" style="display: none;">
+<div class="modal modal-fx-normal is-unselectable" ng-class="{'is-active': $root.uploadModalIsOpen}">
+	<div class="modal-background" ng-click="$root.uploadModalIsOpen = false"></div>
 
-				<div class="hero-body has-text-centered">
-					<div class="icon is-large">
-						<i class="mdi mdi-48px mdi-upload"></i>
+	<div class="modal-card">
+		<header class="modal-card-head">
+			<p class="modal-card-title">Upload file</p>
+		</header>
+		
+		<section class="modal-card-body">
+			<section>
+				<div class="hero dnd-dropzone" msl-file-input="fileSelectionHandler" msl-dnd-folder-input="fileSelectionHandler">
+					<input type="file" multiple="" style="display: none;">
+
+					<div class="hero-body has-text-centered">
+						<div class="icon is-large">
+							<i class="mdi mdi-48px mdi-upload"></i>
+						</div>
+
+						<div>Drag files here or click to select files</div>
 					</div>
-
-					<div>Drag files here or click to select files</div>
 				</div>
+
+				<table class="table is-fullwidth is-hoverable" ng-show="files.length > 0">
+					<thead>
+						<tr>
+							<th>Filename</th>
+
+							<th>Type</th>
+							
+							<th>Size</th>
+							
+							<!-- Just padding to add the action buttons below -->
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+
+					<tbody>
+						<tr ng-repeat="file in files" ng-class="{'has-text-danger': !file.type.includes('audio')}">
+							<td>{{file.name}}</td>
+
+							<td>{{file.type}}</td>
+
+							<td>{{file.size | fileSizeFilter}}</td>
+
+							<td>
+								<button class="button tooltip" data-tooltip="Upload file" ng-if="file.type.includes('audio') && !file.isUploading && !file.isUploaded" ng-click="$ctrl.uploadFile($index)">
+									<span class="icon">
+										<i class="mdi mdi-24px mdi-upload"></i>
+									</span>
+								</button>
+
+								<button class="button tooltip is-tooltip-success" data-tooltip="File uploaded" ng-if="file.isUploaded">
+									<span class="icon" ng-class="{'has-text-success	': file.isUploaded}" >
+										<i class="mdi mdi-24px mdi-check"></i>
+									</span>
+								</button>
+
+								<button class="button tooltip" data-tooltip="Uploading..." ng-if="file.isUploading">
+									<div class="spinner"></div>
+								</button>
+							</td>
+							
+							<td>
+								<button class="button tooltip" data-tooltip="Remove file" ng-click="$ctrl.removeFile($index)" ng-if="!file.isUploading && !file.isUploaded">
+									<span class="icon">
+										<i class="mdi mdi-24px mdi-close"></i>
+									</span>
+								</button>
+
+								<button class="button tooltip" data-tooltip="Copy link" ng-class="{'is-tooltip-success': file.urlCopied}" ng-click="$ctrl.getLink($index)" ng-if="file.isUploaded && file.fileId != undefined">
+									<span class="icon">
+										<i class="mdi mdi-24px mdi-content-copy"></i>
+									</span>
+								</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</section>
+
+			<div ng-show=" links !== '' ">
+				Links
+
+				<textarea class="textarea" ng-model="links"></textarea>
 			</div>
 
-			<table class="table is-fullwidth" ng-show="files.length > 0">
-				<thead>
-					<tr>
-						<th>Filename</th>
-
-						<th>Type</th>
-						
-						<th>Size</th>
-						
-						<!-- Just padding to add the action buttons below -->
-						<th></th>
-						<th></th>
-					</tr>
-				</thead>
-
-				<tbody ng-repeat="file in files">
-					<tr ng-class="{'has-text-danger': !file.type.includes('audio')}">
-						<td>{{file.name}}</td>
-
-						<td>{{file.type}}</td>
-
-						<td>{{file.size | fileSizeFilter}}</td>
-
-						<td>
-							<button class="button tooltip" data-tooltip="Upload file" ng-if="file.type.includes('audio') && !file.isUploading && !file.isUploaded" ng-click="$ctrl.uploadFile($index)">
-								<span class="icon">
-									<i class="mdi mdi-24px mdi-upload"></i>
-								</span>
-							</button>
-
-							<button class="button tooltip" data-tooltip="File uploaded" ng-if="file.isUploaded">
-								<span class="icon" ng-class="{'has-text-success	': file.isUploaded}" >
-									<i class="mdi mdi-24px mdi-check"></i>
-								</span>
-							</button>
-
-							<button class="button tooltip" data-tooltip="Uploading..." ng-if="file.isUploading">
-								<div class="spinner"></div>
-							</button>
-						</td>
-						
-						<td>
-							<button class="button tooltip" data-tooltip="Remove file" ng-click="$ctrl.removeFile($index)" ng-if="!file.isUploading && !file.isUploaded">
-								<span class="icon">
-									<i class="mdi mdi-24px mdi-close"></i>
-								</span>
-							</button>
-
-							<button class="button tooltip" data-tooltip="Copy link" ng-click="$ctrl.getLink($index)" ng-if="file.isUploaded && file.fileId != undefined">
-								<span class="icon">
-									<i class="mdi mdi-24px mdi-content-copy"></i>
-								</span>
-							</button>
-						</td>
-					</tr>
-				</tbody>
-			</table>
 		</section>
-	</section>
-	
-	<footer class="modal-card-foot">
-		<button class="button is-success" ng-click="$ctrl.clearCompleted()">Clear completed</button>
-	</footer>
+		
+		<footer class="modal-card-foot">
+			<button class="button is-success" ng-click="$ctrl.clearCompleted()">Clear completed</button>
+		</footer>
+	</div>
+
+	<button class="modal-close is-large" ng-click="$root.uploadModalIsOpen = false"></button>
 </div>

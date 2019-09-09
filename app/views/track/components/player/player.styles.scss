@@ -1,3 +1,13 @@
+// Initializing the variables for the player
+:root {
+    --primary: #e4e4e4;
+    --accent: #656565;
+    --accentTransparent: #65656565;
+    --accText: #ffffff;
+    --primText: #333333;
+    --secText: #666666;
+}
+
 .music-player-container {
     margin: auto;
     width: 100%;
@@ -12,11 +22,13 @@
     margin: auto;
     border-radius: 10px 10px 10px 10px;
     box-shadow: 0px 5px 10px 0px #00000055;
-    transition:.2s;
+    transition: 0.2s;
+
+    background: transparent linear-gradient(to bottom, #00000000 50%, var(--primary) 95%);
 }
 
 .cover {
-    float: left; /* ??? */
+    float: left;
     margin-top: -100%;
 }
 
@@ -28,6 +40,22 @@
     text-align: center;
     z-index: -1;
     border-radius: 10px 10px 0px 0px;
+
+    &.cover-art {
+        animation-name: fadeInOpacity;
+        animation-iteration-count: 1;
+        animation-timing-function: ease;
+        animation-duration: 0.75s;
+    }
+}
+
+@keyframes fadeInOpacity {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }
 
 .player-controls {
@@ -44,58 +72,77 @@
     height: 64px;
     width: 64px;
     border-radius: 32px;
-    background-color: #00d1b2;
+    background-color: var(--accent);
     box-shadow: 0px 6px 12px 0px #00000044;
-    transition:.25s;
+    transition: 0.25s;
     z-index: 1;
-}
 
-.play-icon {
-    height: inherit;
-    width: inherit;
-}
+    fill: var(--accentText); color: var(--accentText);
 
-.play-pause-button:hover {
-    height: 68px;
-    width: 68px;
-    border-radius: 34px;
-    right: -18px;
-    bottom: -18px;
-    box-shadow: 0px 7px 14px 0px #00000044;
-    transition:.2s;
-    filter: brightness(120%);
+    &:hover {
+        height: 68px;
+        width: 68px;
+        border-radius: 34px;
+        right: -18px;
+        bottom: -18px;
+        box-shadow: 0px 7px 14px 0px #00000044;
+        transition: 0.2s;
+        filter: brightness(120%);
+    }
+
+    .icon {
+        height: inherit;
+        width: inherit;
+    
+        &.spinner {
+            height: inherit;
+            width: inherit;
+        }
+    }
 }
 
 #seek-bar {
-    background-color: #ffffff55;
+    cursor: pointer;
     height: 10px;
     border-radius: 0px 0px 10px 10px;
     overflow: hidden;
     padding-right: 42px;
-    transition:.2s;
-}
+    transition: 0.2s;
 
-#seek-bar:hover {
-    filter: brightness(120%);
-    transition:.25s;
+    background-color: var(--accentTransparent);
+
+    &:hover {
+        filter: brightness(120%);
+        transition: 0.25s;
+    }
 }
 
 #seek-value {
-    background-color: #00d1b2;
     display: block;
     height: inherit;
     width: inherit;
-    transition:.2s;
+    transition: 0.2s;
+
+    background-color: var(--accent);
 }
 
 #current-time {
     position: absolute;
-    left: 24px;
-    bottom: 24px;
+    left: 1.5rem;
+    bottom: 1.5rem;
+
+    color: var(--primaryText);
 }
 
 #duration-time {
     position: absolute;
-    right: 64px;
-    bottom: 24px;
+    right: 4rem;
+    bottom: 1.5rem;
+
+    color: var(--primaryText);
+
+    &:hover {
+        filter: brightness(120%);
+        transition: 0.25s;
+    }
 }

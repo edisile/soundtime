@@ -1,12 +1,22 @@
 /* @ngInject */
 class NavbarController {
-	constructor($scope) {
-		this.scope = $scope;
-		this.scope.uploadModalIsOpen = false;
+	constructor($scope, $location) {
+		this.$location = $location;
+		this.$scope = $scope;
+		this.$scope.uploadModalIsOpen = false;
+
+		this.$scope.trackId = $location.$$path.split("/").pop();
 	}
 
-	changeModalStatus() {
-		this.scope.uploadModalIsOpen = !this.scope.uploadModalIsOpen;
+	goToTrackId() {
+		this.$location.path(`/t/${this.$scope.trackId}`);
+		this.$scope.$root.navbarMenuIsActive = false;
+	}
+
+	submitIfEnter($event) {
+		if ($event.key !== "Enter") return;
+
+		this.goToTrackId();
 	}
 }
 

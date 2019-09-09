@@ -7,8 +7,6 @@ class UploaderController {
 
         this.$scope.files = this.uploadService.filesList;
 
-        console.log(this.$scope.files);
-
         this.$scope.fileSelectionHandler = 
             (newFiles) => {
                 for (var i = 0; i < newFiles.length; i++) {
@@ -17,6 +15,8 @@ class UploaderController {
                     this.$scope.files.push(newFiles[i]);
                 }
             };
+
+        this.$scope.links = "";
     }
 
     clearCompleted() {
@@ -32,20 +32,30 @@ class UploaderController {
     }
 
     getLink(index) {
-        // THIS ONLY WORKS OVER HTTPS
-        // TODO:                make this stuff here VVV a real link
-        const url = `${this.websiteName}/t/${this.$scope.files[index].fileId}`;
-        navigator.clipboard.writeText(url).then(
-            // On success
-            (x) => {
-                console.log("URL copied to clipboard");
-            },
-            // On error
-            (x) => {
-                // TODO: add fallback maybe? Not really a priority
-                console.error("Couldn't copy to clipboard");
-            }
-        );
+        let file = this.$scope.files[index];
+        const url = `${this.websiteName}/t/${file.fileId}`;
+
+        if (navigator.clipboard){
+            // This is a browser supporting clipboard and uses HTTPS
+
+            navigator.clipboard.writeText(url).then(
+                // On success
+                (x) => {
+                    // console.log("URL copied to clipboard");
+                    file.urlCopied = true;
+                },
+                // On error
+                (x) => {
+                    console.error("Couldn't copy to clipboard");
+                    console.warn("falling back to manual copy");
+                    this.$scope.links += `${url} : ${file.name}\n`;
+                }
+            );
+        } else {
+            console.warn("navigator.clipboard not supported", 
+                    "falling back to manual copy");
+            this.$scope.links += `🎶: ${file.name}\n🔗: ${url}\n`;
+        }
     }
 }
 

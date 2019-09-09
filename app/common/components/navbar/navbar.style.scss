@@ -1,9 +1,22 @@
 .navbar {
-	box-shadow: 0px 0px 10px 0 rgba(0, 0, 0, 0.15) !important;
+	box-shadow: 0px 2px 5px 0px #00000022 !important;
+}
+
+.navbar-item {
+	.icon {
+	    margin-right: 0.5rem;
+	    vertical-align: text-bottom;
+	}
+}
+
+.navbar-menu {
+	&.is-active {
+		padding: 1rem;
+	}
 }
 
 .logo {
 	&:hover {
-		opacity: 0.85;
+		filter: brightness(110%);
 	}
 }

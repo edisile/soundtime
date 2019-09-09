@@ -1,4 +1,5 @@
 import boto3
+import os
 from time import time
 
 """
@@ -7,6 +8,8 @@ from time import time
 """
 
 print("Beginning fileRemoval")
+s3 = boto3.client("s3")
+BUCKET = os.environ["s3Bucket"]
 
 ttlUserId = {
     "type": "Service",
@@ -22,8 +25,6 @@ def isRemoveByTtl(record):
         return False
 
 def lambda_handler(event, context):
-    s3 = boto3.client("s3")
-    
     print("Received %d records" % len(event["Records"]))
     
     ttlRecords = list(filter(isRemoveByTtl, event["Records"]))
@@ -50,13 +51,13 @@ def lambda_handler(event, context):
                 print("Removing S3 key %s" % key)
                 
                 response = s3.delete_object(
-                        Bucket = "soundtime-data",
+                        Bucket = BUCKET,
                         Key = key)
                 
                 print(response)
                 
                 response = s3.delete_object(
-                        Bucket = "soundtime-data", 
+                        Bucket = BUCKET, 
                         Key = "previews/" + key)
                 
                 print(response)

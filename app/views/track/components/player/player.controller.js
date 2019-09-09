@@ -1,12 +1,11 @@
 /* @ngInject */
 class PlayerController {
-	constructor($element, $scope, colorService) {
+	constructor($element, $scope) {
 		this.$scope = $scope;
-		this.$scope.colors = colorService.colors;
 
 		this.isPlaying = false;
 		this.seekValue = 0;
-		this.showRemainingTime = false;
+		this.showRemainingTime = true;
 		
 		this.seekBar = angular.element(document.querySelector('#seek-bar'))[0];
 		this.audio = angular.element($element[0]).find("audio")[0];
@@ -14,12 +13,12 @@ class PlayerController {
 		// Getting lenght
 		this.audio.onloadedmetadata = ($event) => {
 			$scope.duration = this.audio.duration;
-
 			$scope.$evalAsync();
 		}
 		
 		this.audio.onended = ($event) => {
 			this.isPlaying = false;
+			this.audio.currentTime = 0;
 		}
 
 		this.audio.onpause = ($event) => {
