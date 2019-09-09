@@ -34,7 +34,7 @@
             </audio>
 
             <div id="seek-bar" ng-click="$ctrl.seek($event)">
-                <span id="seek-value" style="width: {{$ctrl.seekValue * 100}}%;"></span>
+                <span id="seek-value" ng-style="{width: $ctrl.seekValue * 100 + '%'}"></span>
             </div>
         </div>
     </div>
