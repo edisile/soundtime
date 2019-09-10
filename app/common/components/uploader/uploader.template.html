@@ -12,10 +12,11 @@
 					<input type="file" multiple="" style="display: none;">
 
 					<div class="hero-body has-text-centered">
-						<div class="icon is-large">
-							<i class="mdi mdi-48px mdi-upload"></i>
+						<div class="icon is-extra-large">
+							<feather icon="file-plus" size="xxl"></feather>
 						</div>
-
+						<br>
+						<br>
 						<div>Drag files here or click to select files</div>
 					</div>
 				</div>
@@ -46,13 +47,13 @@
 							<td>
 								<button class="button tooltip" data-tooltip="Upload file" ng-if="file.type.includes('audio') && !file.isUploading && !file.isUploaded" ng-click="$ctrl.uploadFile($index)">
 									<span class="icon">
-										<i class="mdi mdi-24px mdi-upload"></i>
+										<feather icon="upload"></feather>
 									</span>
 								</button>
 
 								<button class="button tooltip is-tooltip-success" data-tooltip="File uploaded" ng-if="file.isUploaded">
 									<span class="icon" ng-class="{'has-text-success	': file.isUploaded}" >
-										<i class="mdi mdi-24px mdi-check"></i>
+										<feather icon="check"></feather>
 									</span>
 								</button>
 
@@ -64,13 +65,13 @@
 							<td>
 								<button class="button tooltip" data-tooltip="Remove file" ng-click="$ctrl.removeFile($index)" ng-if="!file.isUploading && !file.isUploaded">
 									<span class="icon">
-										<i class="mdi mdi-24px mdi-close"></i>
+										<feather icon="x"></feather>
 									</span>
 								</button>
 
 								<button class="button tooltip" data-tooltip="Copy link" ng-class="{'is-tooltip-success': file.urlCopied}" ng-click="$ctrl.getLink($index)" ng-if="file.isUploaded && file.fileId != undefined">
 									<span class="icon">
-										<i class="mdi mdi-24px mdi-content-copy"></i>
+										<feather icon="clipboard"></feather>
 									</span>
 								</button>
 							</td>

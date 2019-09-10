@@ -30,21 +30,12 @@ $modal-content-width: 768px;
 
 @import '~bulma-extensions/bulma-tooltip/src/sass/index.sass';
 
-@import url('https://cdn.materialdesignicons.com/4.3.95/css/materialdesignicons.min.css');
-
-// Custom scrollbar
-::-webkit-scrollbar {
-    width: 10px;
+.icon {
+	&.is-extra-large {
+		height: 6rem;
+		width: 6rem;
+	}
 }
-
-::-webkit-scrollbar-thumb {
-    background: $grey-light;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: $grey-dark;
-}
-
 
 // Loading spinner
 .spinner {
@@ -76,4 +67,17 @@ $modal-content-width: 768px;
 		80% { content: "⠇"; }
 		90% { content: "⠏"; }
 	}
+}
+
+// Custom scrollbar
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: $grey-light;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: $grey-dark;
 }

@@ -65,6 +65,10 @@ module.exports = (env) => {
                 {
                     from: 'assets/img',
                     to: 'assets/img' // This is relative to the output dir, so all assets will be copied to ./dist/assets/img
+                },
+                {
+                    from: 'assets/favicon*.png',
+                    to: ''
                 }
             ]),
             new HtmlWebpackPlugin(
@@ -72,7 +76,7 @@ module.exports = (env) => {
 	            	inject: 'head', // Add the script tag into the <head>
 	                filename: 'index.html', // Name of the exported file in the output dir
 	                template: "./app/index.html", // Path to the template
-	                favicon: "assets/favicon.png",
+	                // favicon: "assets/favicon.png",
                     minify: isProduction // Minify HTML when in production mode
 	            }
             )

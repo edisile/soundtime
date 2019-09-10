@@ -41,21 +41,19 @@
 
                     <br>
 
-                    <button class="button has-text-centered is-primary" ng-hide="trackInfoService.error" ng-click="$ctrl.downloadTrack()" ng-class="{'is-success': downloadStarted, 'is-danger': errorDuringRequest}" >
+                    <button class="button has-text-centered is-link" ng-hide="trackInfoService.error" ng-click="$ctrl.downloadTrack()" ng-class="{'is-success': downloadStarted, 'is-danger': errorDuringRequest}">
 
                         <span class="icon">
-                            <i class="mdi mdi-24px mdi-download" ng-if="!(waitingForDownload || downloadStarted)"></i>
+                            <feather icon="download-cloud" ng-if="!(waitingForDownload || downloadStarted)"></feather>
                             
-                            <i class="mdi mdi-24px mdi-check" ng-if="downloadStarted"></i>
+                            <feather icon="check" ng-if="downloadStarted"></feather>
 
-                            <i class="mdi mdi-24px mdi-alert-circle" ng-if="errorDuringRequest"></i>
+                            <feather icon="alert-circle" ng-if="errorDuringRequest"></feather>
 
                             <div class="spinner" ng-if="waitingForDownload && !downloadStarted"></div>
                         </span>
 
-                        <span>
-                            Download
-                        </span>
+                        <span>Download</span>
                     </button>
                 </div>
             </div>

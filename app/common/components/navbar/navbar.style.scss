@@ -15,8 +15,16 @@
 	}
 }
 
-.logo {
-	&:hover {
-		filter: brightness(110%);
+.navbar-item {
+	.logo {
+		height: 2rem;
+		width: 2rem;
+		max-height: 2rem !important;
+		transition: 0.20s;
+		
+		&:hover {
+			filter: brightness(110%);
+			transition: 0.25s;
+		}
 	}
 }

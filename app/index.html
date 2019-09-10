@@ -5,6 +5,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular-route.min.js"></script>
+        <script src="https://unpkg.com/feather-icons"></script>
+
+        <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
         
         <title ng-bind-template="{{viewTitle ? viewTitle + ' - ' : Soundtime}}Soundtime"></title>
     </head>
@@ -13,7 +17,7 @@
         <div class="">
             <navbar></navbar>
             <uploader></uploader>
-
+            
             <div ng-view class="hero is-fullheight-with-navbar is-unselectable"></div>
         </div>
 
@@ -24,5 +28,5 @@
                 </p>
             </div>
         </footer>
-	</body>    
+	</body>
 </html>

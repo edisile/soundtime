@@ -1,8 +1,8 @@
 <nav class="navbar is-spaced is-fixed-top has-shadow is-unselectable">
 	<div class="container">
 		<div class="navbar-brand">
-			<a class="navbar-item logo" href="/" ng-click="trackId = ''">
-				<img src="/assets/img/logo.svg" alt="soundti.me">
+			<a class="navbar-item" href="/" ng-click="trackId = ''">
+				<img class="logo" src="/assets/img/logo.svg" alt="soundti.me">
 			</a>
 
 			<a role="button" class="navbar-burger burger" ng-class="{'is-active': $root.navbarMenuIsActive}" ng-click="$root.navbarMenuIsActive = !$root.navbarMenuIsActive" aria-label="menu" aria-expanded="false" data-target="navbar">
@@ -27,15 +27,24 @@
 						</div>
 						
 						<div class="control">
-							<a class="button" disabled ng-if="trackId.length < 6">Go</a>
-							<a class="button is-link" ng-if="trackId.length >= 6" ng-click="$ctrl.goToTrackId()">Go</a>
+							<button class="button" disabled ng-if="trackId.length < 6">
+								<span class="icon">
+									<feather icon="arrow-right" size="s"></feather>
+								</span>
+							</button>
+							
+							<button class="button is-link" ng-if="trackId.length >= 6" ng-click="$ctrl.goToTrackId()">
+								<span class="icon">
+									<feather icon="arrow-right" size="s"></feather>
+								</span>
+							</button>
 						</div>
 					</div>
 				</div>
 
 				<a class="navbar-item is-hoverable is-hidden-tablet" ng-click="$root.navbarMenuIsActive = false" href="/">
 					<span class="icon">
-						<i class="mdi mdi-24px mdi-home"></i>
+						<feather icon="home" size="s"></feather>
 					</span>
 
 					<span>Home</span>
@@ -45,7 +54,7 @@
 			<div class="navbar-end">
 				<a class="navbar-item is-hoverable" ng-click="$root.uploadModalIsOpen = true; $root.navbarMenuIsActive = false">
 					<span class="icon">
-						<i class="mdi mdi-24px mdi-cloud-upload"></i>
+						<feather icon="upload-cloud" size="s"></feather>
 					</span>
 
 					<span>Upload files</span>
