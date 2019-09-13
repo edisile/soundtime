@@ -1,8 +1,7 @@
 <div class="music-player-container">
-    <div class="music-player">
+    <div class="music-player" ng-style="!$ctrl.tags.image ? {'padding-top': '10px', 'background-color': 'var(--primary)'} : undefined">
         <div class="cover">
             <img color-watch class="cover-art" ng-if="$ctrl.tags.image" ng-attr-src="{{$ctrl.tags.image}}" alt="">
-            <img ng-if="!$ctrl.tags.image" src="/assets/img/file_placeholder.svg" alt="">
         </div>
 
         <div class="player-controls">

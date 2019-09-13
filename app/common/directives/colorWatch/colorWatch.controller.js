@@ -16,9 +16,7 @@ class ColorWatchController {
 				i.src = this.element.src;
 
 				// For some reason higher quality == bigger downsampling, wtf
-				let v = new V(i, { quality: 1.5 });
-
-				v.getPalette().then(
+				new V(i, { quality: 6 }).getPalette().then(
 					(palette) => {
 						// Get dominant color swatches
 						let ps, as;
@@ -70,8 +68,8 @@ class ColorWatchController {
 		if ( (palette.Muted.population / colors[1].population) < 2 && 
 				(palette.Muted.population / colors[2].population) < 3 ) {
 
-			// The image isn't mostly muted so whatever
 			// console.log("Removing muted");
+			// The image isn't mostly muted so whatever
 			delete palette.Muted; // No one likes muted colors anyway...
 
 			colors = Object.values(palette).sort(
@@ -83,9 +81,14 @@ class ColorWatchController {
 
 		ps = colors[0]; as = colors[1];
 
-		if ( ps.getHex() === palette.Vibrant.getHex() ) {
-			// Vibrant color might be too strong for a primary
-			// console.log("Swapping vibrant to accent");
+		// console.log(ps, as);
+		
+		// Vibrant color is the primary, but it might be too strong
+		if ( ps.getHex() === palette.Vibrant.getHex() && 
+				ps.population / as.population < 2 ) {
+
+			// Ok, primary isn't largely more popular
+			console.log("Swapping vibrant to accent");
 			[as, ps] = [ps, as];
 		}
 
@@ -100,9 +103,9 @@ class ColorWatchController {
 		let dE = this.deltaE(p.toRgb(), a.toRgb());
 		// console.log(`dE = ${dE}\ncontrast = ${contrast}`);
 
-		let i = 0;
-		while ( i++ < 10 && (dE < 30 || contrast < 4) ) {
+		if (dE >= 45 && contrast >= 2) return;
 
+		for (let i = 0; i < 15; i++) {
 			// console.log(p.toHexString(), a.toHexString())
 			p.isLight() ? a.darken(5) : a.lighten(5);
 										
@@ -113,7 +116,7 @@ class ColorWatchController {
 
 			// console.log(`dE = ${dE}\ncontrast = ${contrast}`);
 
-			if (dE >= 45) break;
+			if (dE >= 45 && contrast >= 2) break;
 		}
 	}
 

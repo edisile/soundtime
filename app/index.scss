@@ -37,6 +37,13 @@ $modal-content-width: 768px;
 	}
 }
 
+.button {
+	transition: 0.2s;
+	&:hover {
+		transition: 0.25s;
+	}
+}
+
 // Loading spinner
 .spinner {
 	display: flex;

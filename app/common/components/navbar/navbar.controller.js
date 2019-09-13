@@ -5,12 +5,15 @@ class NavbarController {
 		this.$scope = $scope;
 		this.$scope.uploadModalIsOpen = false;
 
-		this.$scope.trackId = $location.$$path.split("/").pop();
+		if ($location.$$path.includes("/t/")) {
+			// This is a track link
+			this.$scope.trackId = $location.$$path.split("/").pop();
+		}
 	}
 
 	goToTrackId() {
 		this.$location.path(`/t/${this.$scope.trackId}`);
-		this.$scope.$root.navbarMenuIsActive = false;
+		this.$scope.$root.navbarMenuIsActive = false; // For mobile
 	}
 
 	submitIfEnter($event) {

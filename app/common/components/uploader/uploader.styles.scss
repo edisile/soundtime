@@ -3,16 +3,20 @@
 
 .dnd-dropzone {
     border: dashed;
-    border-width: 1px;
-    border-radius: 0.5em;
+    border-width: 6px;
+    border-radius: 6px;
+    border-color: $grey-light;
+    transition: 0.2s;
+    cursor: pointer;
 
     &:hover {
         color: $link;
+    	transition: 0.25s;
     }
 }
 
 .msl-drag-over {
-    color: $link;
+    color: $info;
 }
 
 .table tbody td {
