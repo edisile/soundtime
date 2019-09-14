@@ -15,6 +15,16 @@
     }
 }
 
+.table {
+    tbody {
+        tr {
+            td, .is-expanded {
+                width: 100%;
+            }
+        }
+    }
+}
+
 .msl-drag-over {
     color: $info;
 }

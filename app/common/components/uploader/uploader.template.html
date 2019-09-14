@@ -26,9 +26,9 @@
 						<tr>
 							<th>Filename</th>
 
-							<th>Type</th>
+							<!-- <th>Type</th>
 							
-							<th>Size</th>
+							<th>Size</th> -->
 							
 							<!-- Just padding to add the action buttons below -->
 							<th></th>
@@ -38,11 +38,11 @@
 
 					<tbody>
 						<tr ng-repeat="file in files" ng-class="{'has-text-danger': !file.type.includes('audio')}">
-							<td>{{file.name}}</td>
+							<td class="is-expanded">{{file.name}}</td>
 
-							<td>{{file.type}}</td>
+							<!-- <td>{{file.type}}</td>
 
-							<td>{{file.size | fileSizeFilter}}</td>
+							<td>{{file.size | fileSizeFilter}}</td> -->
 
 							<td>
 								<button class="button tooltip" data-tooltip="Upload file" ng-if="file.type.includes('audio') && !file.isUploading && !file.isUploaded" ng-click="$ctrl.uploadFile($index)">
@@ -63,7 +63,7 @@
 							</td>
 							
 							<td>
-								<button class="button tooltip" data-tooltip="Remove file" ng-click="$ctrl.removeFile($index)" ng-if="!file.isUploading && !file.isUploaded">
+								<button class="button tooltip is-tooltip-danger" data-tooltip="Remove file" ng-click="$ctrl.removeFile($index)" ng-if="!file.isUploading && !file.isUploaded">
 									<span class="icon">
 										<feather icon="x"></feather>
 									</span>

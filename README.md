@@ -142,11 +142,20 @@ The API for the Soundtime service is composed of just three resources, namely `/
     - Status: 400, Bad request
     - When requesting a track that does not exist
 
-### Lambda
-
-...
-
 ### DynamoDB
 
-...
+All metadata about the files uploaded to the service is kept in a table named `soundtime-data` deployed in the eu-central-1 region. Each item in the table uses as key the 6+ character ID that is also used in the URLs of the service while a second index, based on the S3 key of each file, is kept to allow for retrieval of the entries when processing events triggered by S3.
 
+All items in the table are in possession of a numeric attribute named `ttl` that, as the name suggests, represents the time-to-live (TTL) of the item inside the table in the form of UNIX epoch timestamp representing the last second the item will be valid; once the TTL of an item is up, within a few minutes, it will be removed from the table automatically.
+
+Other information kept within the table is the original filename and format, the size in bytes of the file, upload date, the title, artist, album and cover art (as a base64 encode image) if available in the original file.
+
+### Lambda
+
+All functions except `lambdaAtEdgeRedirect` are executed in the eu-central-1 region and use Python 3.7 as runtime.
+
+The three functions invoked by the API, namely `generateUploadUrl`, `getFileData` and  `generateDownloadUrl` are set up to use up to 128 MB of memory and the timeout of 1 second (while all three functions instead return within 250 ms, 1 second is lowest timeout allowed).
+
+On the other hand, the most demanding function, `newFileAddedToS3`, tasked with extracting metadata from the uploaded file and converting it via FFMPEG to a 128 kb/s Ogg Vorbis file for preview reasons, is configured to run using 2048 MB of memory — barely any of this memory is used, but as Lambda allocates CPU power proportionally to memory such a setting was necessary to encode files in a reasonable amount of time — and with a timeout of 1 minute, allowing to encode files long up to about 1 hour.
+
+Another function with a long timeout, 1 minute and 30 seconds, is `removeFilesTtl`, that analyzes a DynamoDB Stream looking for items removed from the `soundtime-data` table because of an exhaustion of their TTL. As the stream is populated at each operation on the table and to avoid processing just a few items each time the function is called, the stream is set up to wait for a time frame of as long as 5 minutes for up to 200 records in order to fill a pool of events that will be sent to the function; once either 200 records are collected or 5 minutes have passed the function is invoked to analyze the stream, filtering the operations that are not deletions for TTL ending and then removing the files from the S3 bucket associated with the entries removed from the DynamoDB table.
