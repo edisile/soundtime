@@ -58,27 +58,33 @@ The Implementation view is tasked with organizing and structuring the codebase i
 
 Generalizing the concept of documenting interdependence to not only code but cloud services and resources provided by them, a more fitting diagram illustrating the relationships of access between the various services/resources — similarly to Fig. 2, but at a higher level of detail — can be formed to provide an accurate description of how the implementation of the system has been carried out.
 
-[ Fig. 8: diagram showing the resources used by each service and other stuff idk ]
+[ Fig. 8: diagram showing the resources used by each service ]
 
 ### Deployment view
 
-This view, dedicated to taking into account the physical challenges of the non-functional requirements such as scalability and availability by designing the infrastructure the system will operate in, might appear futile from the cloud based IaaS perspective and even more from the PaaS and FaaS points of view, but might be an important asset in the creation of complex hybrid or multi cloud systems by allowing to take a better look at the challenges involved in the interoperation between services offered by different vendors and by giving more insight into the planning for allocations of resources — albeit in the case of cloud systems not physical ones — in the event of outages, traffic spikes or other forms of emergency. 
+This view, dedicated to taking into account the physical challenges of the non-functional requirements such as scalability and availability by designing the infrastructure the system will operate in and plans for recovery in case of hardware failures, might appear futile from the cloud based IaaS perspective and even more from the PaaS and FaaS points of view, but might be an important asset in the creation of complex hybrid or multi cloud systems by allowing to take a better look at the challenges involved in the interoperation between services offered by different vendors and by giving more insight into the planning for allocations of resources — albeit in the case of cloud systems not physical ones — in the event of outages, traffic spikes or other forms of emergency. 
 
+For simple, single-vendor, serverless applications on the other hand, a deployment diagram might not be absolutely necessary but can still provide a few insights on how end users interact with the system; the deployment diagram in Fig. 8 takes care of illustrating this.
 
+[ Fig. 9: deployment diagram ]
 
 ## Implementation details
 
-### S3
-
-S3 is used as a way to provide storage for both the web application and its data, in the aptly named `soundtime-app` and `soundtime-data` buckets.
-
-Uploads/downloads are done directly to/from S3 by generating time limited pre-signed URLs that can be used to execute a PUT/GET HTTP request to/from the `soundtime-data` bucket; this bucket is also used for storing the low quality previews of each track that can as well be retrieved via pre-signed links.
-
 ### Client
 
-The client is a web Single Page Application (SPA) developed using the AngularJS framework and publicly available at `https://soundti.me` or `https://www.soundti.me`. It allows for the upload, preview and download of the files. A few sample tracks that can be previewed and downloaded through the service are available at
+The client is a web Single Page Application (SPA) developed using the AngularJS framework and publicly available at `https://soundti.me` or `https://www.soundti.me`; being a SPA it relies on loading the `index.html` file upon the first access to the website no matter the sub-path in the URL, routing the navigation internally without having to load other static files, interacting with the API instead to fetch and display content.
 
-* ... links here
+The application allows for the upload, preview and download of the files that, once uploaded, can be reached via URLs of the form `https://soundti.me/t/[6+ characters code]`; upon requesting such a URL the application launches a request to the API for the metadata related to the file if available, otherwise if the file does not exist it displays an error stating this.
+
+A few sample tracks that can be previewed and downloaded through the service are available at
+
+- ... links here
+
+### S3
+
+S3 is used as a way to provide storage for both the web application and its data, in the aptly named `soundtime-app` and `soundtime-data` buckets, both located in the eu-central-1 region.
+
+Uploads/downloads are done directly to/from S3 by generating time limited pre-signed URLs that can be used to execute a PUT/GET HTTP request to/from the `soundtime-data` bucket; files stored within the bucket use a UUIDv4 as their object key. This bucket is also used for storing the low quality previews of each track that can as well be retrieved via pre-signed links; the previews are stored with the same key of the original file with the added prefix "previews/".
 
 ### CloudFront
 
