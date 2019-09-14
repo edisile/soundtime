@@ -148,7 +148,7 @@ All metadata about the files uploaded to the service is kept in a table named `s
 
 All items in the table are in possession of a numeric attribute named `ttl` that, as the name suggests, represents the time-to-live (TTL) of the item inside the table in the form of UNIX epoch timestamp representing the last second the item will be valid; once the TTL of an item is up, within a few minutes, it will be removed from the table automatically.
 
-Other information kept within the table is the original filename and format, the size in bytes of the file, upload date, the title, artist, album and cover art (as a base64 encode image) if available in the original file.
+Other information kept within the table is the original filename and format, the size in bytes of the file, upload date, the title, artist, album and cover art (as a Base64 encode image) if available in the original file.
 
 ### Lambda
 
