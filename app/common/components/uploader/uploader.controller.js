@@ -10,8 +10,12 @@ class UploaderController {
         this.$scope.fileSelectionHandler = 
             (newFiles) => {
                 for (var i = 0; i < newFiles.length; i++) {
+                    // console.log(newFiles[i])
+
                     newFiles[i].isUploading = false;
                     newFiles[i].isUploaded = false;
+                    newFiles[i].isAudio = newFiles[i].type.includes('audio');
+
                     this.$scope.files.push(newFiles[i]);
                 }
             };

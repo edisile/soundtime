@@ -24,41 +24,43 @@
 				<table class="table is-fullwidth is-hoverable" ng-show="files.length > 0">
 					<thead>
 						<tr>
-							<th>Filename</th>
-
-							<!-- <th>Type</th>
-							
-							<th>Size</th> -->
-							
 							<!-- Just padding to add the action buttons below -->
+							<th></th>
+							<th></th>
 							<th></th>
 							<th></th>
 						</tr>
 					</thead>
 
 					<tbody>
-						<tr ng-repeat="file in files" ng-class="{'has-text-danger': !file.type.includes('audio')}">
+						<tr ng-repeat="file in files" ng-class="{'has-text-danger': !file.isAudio}">
 							<td class="is-expanded">{{file.name}}</td>
 
-							<!-- <td>{{file.type}}</td>
-
-							<td>{{file.size | fileSizeFilter}}</td> -->
+							<!-- <td>{{file.size | fileSizeFilter}}</td> -->
 
 							<td>
-								<button class="button tooltip" data-tooltip="Upload file" ng-if="file.type.includes('audio') && !file.isUploading && !file.isUploaded" ng-click="$ctrl.uploadFile($index)">
+								<span class="content is-small" ng-if="file.isUploading && file.uploadProgress" ng-bind-template="{{file.uploadProgress}}%"></span>
+
+								<span class="icon has-text-danger tooltip is-tooltip-danger" data-tooltip="Upload error" ng-if="file.error">
+									<feather icon="alert-circle"></feather>
+								</span>
+							</td>
+
+							<td>
+								<button class="button tooltip" data-tooltip="Upload file" ng-if="file.isAudio && !file.isUploading && !file.isUploaded" ng-click="$ctrl.uploadFile($index)">
 									<span class="icon">
 										<feather icon="upload"></feather>
 									</span>
 								</button>
-
-								<button class="button tooltip is-tooltip-success" data-tooltip="File uploaded" ng-if="file.isUploaded">
-									<span class="icon" ng-class="{'has-text-success	': file.isUploaded}" >
-										<feather icon="check"></feather>
-									</span>
-								</button>
-
+								
 								<button class="button tooltip" data-tooltip="Uploading..." ng-if="file.isUploading">
 									<div class="spinner"></div>
+								</button>
+
+								<button class="button tooltip has-text-success is-tooltip-success" data-tooltip="File uploaded" ng-if="file.isUploaded">
+									<span class="icon">
+										<feather icon="check"></feather>
+									</span>
 								</button>
 							</td>
 							

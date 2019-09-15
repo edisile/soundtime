@@ -2,7 +2,7 @@
 
 ### Abstract
 
-This document describes the Soundtime music charing service, illustrating its core architecture and implementation, along with the limitations of its current state.
+This document describes the Soundtime music sharing service, illustrating its core architecture and implementation, explaining the various design decisions taken during its creation along with the limitations of the system in its current state.
 
 Keywords—music, serverless, Amazon Web Services.
 
@@ -98,7 +98,7 @@ A Route 53 hosted zone is responsible for routing traffic directed to the `sound
 
 ### API Gateway
 
-The API for the Soundtime service is composed of just three resources, namely `/getUploadUrl`, ` /getTrackInfo` and `/getDownloadUrl `.
+The API is deployed in two stages: the edge-distributed, cache-enabled `production` stage reachable at `api.soundti.me` and the `beta` stage used during development and testing. The API for the Soundtime service is composed of just three resources, namely `/getUploadUrl`, ` /getTrackInfo` and `/getDownloadUrl `.
 
 ##### getUploadUrl
 

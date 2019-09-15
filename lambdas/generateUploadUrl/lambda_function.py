@@ -12,7 +12,8 @@ from urllib.parse import unquote
         {
             "filename": string,
             "size": int,
-            "type": string
+            "type": string,
+            "md5": string (base64 encoded md5 sum of the file)
         }
 """
 
@@ -56,7 +57,9 @@ def lambda_handler(event, context):
             Params = {
                 "Bucket": BUCKET,
                 "Key": s3ObjectKey,
-                "ContentLength": fileSize
+                "ContentLength": fileSize,
+                "ContentMD5": event["md5"],
+                "ContentType": event["type"]
             }, 
             ExpiresIn = 600 # The link is valid for 600 s = 10 min
         )
@@ -67,4 +70,4 @@ def lambda_handler(event, context):
             "url": presigned_url
         }
     except ValueError:
-        raise Exception("<400> Bad request, file size was not a number")
+        raise Exception("<400> Bad request: file size is not a number")
