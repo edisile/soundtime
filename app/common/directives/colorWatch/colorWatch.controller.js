@@ -88,7 +88,7 @@ class ColorWatchController {
 				ps.population / as.population < 2 ) {
 
 			// Ok, primary isn't largely more popular
-			console.log("Swapping vibrant to accent");
+			// console.log("Swapping vibrant to accent");
 			[as, ps] = [ps, as];
 		}
 
