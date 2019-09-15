@@ -64,7 +64,7 @@ Generalizing the concept of documenting interdependence to not only code but clo
 
 This view, dedicated to taking into account the physical challenges of the non-functional requirements such as scalability and availability by designing the infrastructure the system will operate in and plans for recovery in case of hardware failures, might appear futile from the cloud based IaaS perspective and even more from the PaaS and FaaS points of view, but might be an important asset in the creation of complex hybrid or multi cloud systems by allowing to take a better look at the challenges involved in the interoperation between services offered by different vendors and by giving more insight into the planning for allocations of resources — albeit in the case of cloud systems not physical ones — in the event of outages, traffic spikes or other forms of emergency. 
 
-For simple, single-vendor, serverless applications on the other hand, a deployment diagram might not be absolutely necessary but can still provide a few insights on how end users interact with the system; the deployment diagram in Fig. 8 takes care of illustrating this.
+For simple, single-vendor, serverless applications on the other hand, a deployment diagram might not be absolutely necessary but can still provide a few insights on how end users interact with the system; the deployment diagram in Fig. 9 takes care of illustrating this.
 
 [ Fig. 9: deployment diagram ]
 
@@ -94,7 +94,7 @@ Since the SPA relies on the root `index.html` file being served in order to exec
 
 ### Route 53
 
-A Route 53 hosted zone is responsible for routing traffic directed to the `soundti.me` domain towards the CloudFront distribution (when requesting the root domain or its `www` sub-domain) or the Gateway API endpoint (available at the `api.soundti.me`).
+A Route 53 hosted zone is responsible for routing traffic directed to the `soundti.me` domain towards the CloudFront distribution (when requesting the root domain or its `www.soundti.me` sub-domain) or the Gateway API endpoint (available at the `api.soundti.me`).
 
 ### API Gateway
 
