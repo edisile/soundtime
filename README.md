@@ -98,7 +98,7 @@ A Route 53 hosted zone is responsible for routing traffic directed to the `sound
 
 ### API Gateway
 
-The API is deployed in two stages: the edge-distributed, cache-enabled `production` stage reachable at `api.soundti.me` and the `beta` stage used during development and testing. The API for the Soundtime service is composed of just three resources, namely `/getUploadUrl`, ` /getTrackInfo` and `/getDownloadUrl `.
+The API is deployed in two stages: the edge-distributed, cache-enabled `production` stage reachable at `api.soundti.me` and the `beta` stage used during development and testing. The API for the Soundtime service is composed of just three resources, namely `/getUploadUrl`, ` /getTrackInfo` and `/getDownloadUrl `; the names of these resources as well as the route they can be reached at is editable in the `app/config/api.constant.js` file.
 
 ##### getUploadUrl
 
@@ -159,3 +159,9 @@ The three functions invoked by the API, namely `generateUploadUrl`, `getFileData
 On the other hand, the most demanding function, `newFileAddedToS3`, tasked with extracting metadata from the uploaded file and converting it via FFMPEG to a 128 kb/s Ogg Vorbis file for preview reasons, is configured to run using 2048 MB of memory — barely any of this memory is used, but as Lambda allocates CPU power proportionally to memory such a setting was necessary to encode files in a reasonable amount of time — and with a timeout of 1 minute, allowing to encode files long up to about 1 hour.
 
 Another function with a long timeout, 1 minute and 30 seconds, is `removeFilesTtl`, that analyzes a DynamoDB Stream looking for items removed from the `soundtime-data` table because of an exhaustion of their TTL. Since the stream is populated at each operation on the table and to avoid processing just a few items each time the function is called, the stream is set up to wait for a time frame of as long as 5 minutes for up to 200 records in order to fill a pool of events that will be sent to the function; once either 200 records are collected or 5 minutes have passed the function is invoked to analyze the stream, filtering the operations that are not deletions for TTL and then removing the files from the S3 bucket associated to the entries removed from the DynamoDB table.
+
+## Development
+
+The development process did not make use of any serverless application deployment framework because of the steeper learning curve compared to using the AWS Management Console; despite this, AWS allows for exporting SAM and Swagger templates for easier deployment of, respectively, Lambda functions and API — the S3 buckets, CloudFront distribution and DynamoDB table will still have to be configured manually though. The bulk of the development regarding Lambda functions was done using the web editor and, occasionally, using a text editor and the AWS command line tool locally.
+
+The web client was developed locally using npm for package management and workflow automation and Webpack for bundling of the distributable application.

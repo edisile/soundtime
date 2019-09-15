@@ -47,6 +47,7 @@ class UploaderController {
                 (x) => {
                     // console.log("URL copied to clipboard");
                     file.urlCopied = true;
+                    this.$scope.$evalAsync();
                 },
                 // On error
                 (x) => {
