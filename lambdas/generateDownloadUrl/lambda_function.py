@@ -31,7 +31,7 @@ def lambda_handler(event, context):
                 "ResponseContentDisposition": "attachment;filename=" + \
                         dbResponse["Item"]["filename"]["S"] # Set the filename
             },
-            ExpiresIn = 600 # The link is valid for 600 s = 10 min
+            ExpiresIn = 1800 # The link is valid for 30 min
         )
     
         # Return the presigned URL and fileId as the response to the API request

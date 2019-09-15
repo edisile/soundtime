@@ -7,4 +7,4 @@ exports.handler = async (event, context, callback) => {
     request.uri = "/index.html";
     
     return callback(null, request);
-}; 
+};

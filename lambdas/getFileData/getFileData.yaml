@@ -10,7 +10,7 @@ Resources:
       CodeUri: .
       Description: Query the DB for file data and generate a signed preview URL
       MemorySize: 128
-      Timeout: 3
+      Timeout: 1
       Role: 'arn:aws:iam::670324316752:role/dynamoDB-get-query-S3-get'
       Events:
         Api1:

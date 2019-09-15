@@ -39,7 +39,7 @@ def lambda_handler(event, context):
                 "Key": "previews/" + dbResponse["Item"]["s3Key"]["S"],
                 "ResponseContentType": "audio/ogg",
             },
-            ExpiresIn = 600 # The link is valid for 600 s = 10 min
+            ExpiresIn = 1800 # The link is valid for 30 min
         )
         
         newTtl = int(time()) + (14*24*60*60) # 14 days in seconds
