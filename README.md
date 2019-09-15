@@ -78,7 +78,10 @@ The application allows for the upload, preview and download of the files that, o
 
 A few sample tracks that can be previewed and downloaded through the service are available at
 
-- ... links here
+- https://soundti.me/t/zIsfBy
+- https://soundti.me/t/Vfna1J
+- https://soundti.me/t/J2Ovl2
+- https://soundti.me/t/1djWyO
 
 ### S3
 

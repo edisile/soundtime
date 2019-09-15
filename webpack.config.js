@@ -69,6 +69,22 @@ module.exports = (env) => {
                 {
                     from: 'assets/favicon*.png',
                     to: ''
+                },
+                {
+                    from: 'assets/android-chrome*.png',
+                    to: ''
+                },
+                {
+                    from: 'assets/favicon.ico',
+                    to: 'assets'
+                },
+                {
+                    from: 'assets/site.webmanifest',
+                    to: 'assets'
+                },
+                {
+                    from: 'assets/apple-touch-icon.png',
+                    to: 'assets'
                 }
             ]),
             new HtmlWebpackPlugin(
